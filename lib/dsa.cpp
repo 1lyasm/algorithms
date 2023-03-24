@@ -562,3 +562,7 @@ int ReverseInteger::string_to_int(std::string s) {
     }
     return val;
 }
+
+std::vector<int> Power4::power_4() {
+        
+}

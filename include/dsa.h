@@ -86,4 +86,8 @@ struct ReverseInteger {
     static int string_to_int(std::string);
 };
 
+struct Power4 {
+    static std::vector<int> power_4();
+};
+
 #endif
