@@ -3,8 +3,8 @@ import sys
 
 def main():
     if sys.platform.startswith("win"):
-        os.system("test_dsa")
+        os.system("build/test_dsa.exe")
     elif sys.platform.startswith("linux"):
-        os.system("./test_dsa")
+        os.system("cd build && ./test_dsa && cd ..")
 
 if __name__ == "__main__": main()
