@@ -25,13 +25,8 @@ int read_int() {
     }
     assert(top >= 1 && 
             "read_int: input int length must be greater than zero");
-    // int k = 0; 
-    // for (; k < top; ++k) {
-    //     printf("%c (k = %d)\n", s[k], k);
-    // } printf("\n");
     int j = 0;
     for (; j < top; ++j) {
-        // printf("hey, j = %d\n", j);
         assert(s[j] - '0' >= 0 && s[j] - '9' <= 0 &&
                 "read_int: non-digit character entered");
     }
@@ -48,7 +43,6 @@ int read_int() {
     }
     assert(as_int >= 0);
     free(s); s = 0;
-    // printf("\ninput integer: %d\n", as_int);
     return as_int;
 }
 
@@ -106,7 +100,6 @@ int is_duplicate(int rand_val, int current_index,
             break;
         }
     }
-    // printf("is_duplicate: returning %d\n", result);
     return result;
 }
 
@@ -145,145 +138,121 @@ void print_chains(struct LListNode *head_1,
     free(it_matrix); it_matrix = 0;
 }
 
+struct CompletionInfo {
+    unsigned completed_count;
+    unsigned completed_arr[3];
+};
+
+void print_freq_arr(struct CompletionInfo *freq_arr, int size) {
+    int i;
+    for (i = 0; i < size; ++i) {
+        printf("(count: %u, %u%u%u)\n",
+            freq_arr[i].completed_count,
+            freq_arr[i].completed_arr[0],
+            freq_arr[i].completed_arr[1],
+            freq_arr[i].completed_arr[2]);
+    } printf("\n");
+}
+
+void fill_freq_arr(struct CompletionInfo *freq_arr, int n, int m) {
+    int common_value = rand() % n;
+    freq_arr[common_value].completed_count = 3;
+    int i;
+    for (i = 0; i < 3 * m - 3; ++i) {
+        int rand_index = rand() % n;
+        for (; freq_arr[rand_index].completed_count >= 2;) {
+            rand_index = rand() % n;
+        }
+        ++freq_arr[rand_index].completed_count;
+    }
+}
+
+void fill_chains(struct LListNode **it_matrix,
+    struct CompletionInfo *freq_arr, int n, int m) {
+    int sizes[3] = {0, 0, 0};
+    int i;
+    for (i = 0; i < 3; ++i) {
+        int rand_index = rand() % n;
+        int rand_slot;
+        do {
+            for (; freq_arr[rand_index].completed_count == 0;) {
+                rand_index = rand() % n;
+            }
+            rand_slot = rand() % 3;
+            for (; freq_arr[rand_index].completed_arr[rand_slot] == 1;) {
+                rand_slot = rand() % 3;
+            } 
+        } while(sizes[rand_slot] == 1);
+        --freq_arr[rand_index].completed_count;
+        freq_arr[rand_index].completed_arr[rand_slot] = 1;
+        ++sizes[rand_slot];
+        it_matrix[rand_slot]->value = rand_index + 1;
+    }
+    printf("heads: ");
+    int j;
+    for (j = 0; j < 3; ++j) {
+        printf("%d ", it_matrix[j]->value);
+    }
+    printf("\nsizes: ");
+    for (j = 0; j < 3; ++j) {
+        printf("%d ", sizes[j]);
+    } printf("\n");
+
+    for (i = 0; i < 3 * m - 3; ++i) {
+        int rand_index = rand() % n;
+        int rand_slot;
+        print_freq_arr(freq_arr, n);
+        do {
+            for (; freq_arr[rand_index].completed_count == 0;) {
+                rand_index = rand() % n;
+            }
+            rand_slot = rand() % 3;
+            for (; freq_arr[rand_index].completed_arr[rand_slot] == 1;) {
+                rand_slot = rand() % 3;
+            } 
+        } while(sizes[rand_slot] == m);
+        --freq_arr[rand_index].completed_count;
+        freq_arr[rand_index].completed_arr[rand_slot] = 1;
+        ++sizes[rand_slot];
+        it_matrix[rand_slot]->next = malloc(sizeof(struct LListNode));
+        it_matrix[rand_slot] = it_matrix[rand_slot]->next;
+        it_matrix[rand_slot]->value = rand_index + 1;
+    }
+    print_freq_arr(freq_arr, n);
+}
+
 void generate_chains(struct LListNode *head_1,
     struct LListNode *head_2,    
     struct LListNode *head_3, int n, int m) {
     assert(head_1 != 0 && head_2 != 0 && head_3 != 0 &&
         "generate_chains: null pointer input");
-    int gen_matrix_size = 3;
-    int **gen_matrix = malloc(
-        gen_matrix_size * sizeof(int*));
-    int i;
-    for (i = 0; i < gen_matrix_size; ++i) {
-        gen_matrix[i] = calloc(n, sizeof(int));
-    }
-    int common = rand() % n;
-    for (i = 0; i < gen_matrix_size; ++i) {
-        gen_matrix[i][common] = true;
-    }
     int it_matrix_size = 3;
     struct LListNode **it_matrix = malloc(
         it_matrix_size * sizeof(struct LListNode*));
     it_matrix[0] = head_1;
     it_matrix[1] = head_2;
     it_matrix[2] = head_3;
-    for (i = 0; i < it_matrix_size; ++i) {
-        assert(it_matrix[i] != 0 &&
-            "generate_chains: illegal null pointer");
-        it_matrix[i]->value = common + 1;
+
+    int freq_arr_size = n;
+    struct CompletionInfo *freq_arr = malloc(n * sizeof(struct CompletionInfo));
+    int i;
+    for (i = 0; i < freq_arr_size; ++i) {
+        freq_arr[i].completed_count = 0;
+        freq_arr[i].completed_arr[0] = 0;
+        freq_arr[i].completed_arr[1] = 0;
+        freq_arr[i].completed_arr[2] = 0;
     }
-    for (i = 0; i < m - 1; ++i) {
-        int j;
-        for (j = 0; j < gen_matrix_size; ++j) {
-            int rand_value = rand() % n;
-            for (; gen_matrix[j][rand_value] == true || 
-                is_duplicate(rand_value, j,
-                gen_matrix, gen_matrix_size) == true;) {
-                // printf("\nhey\n");
-                rand_value = rand() % n;
-            }
-            gen_matrix[j][rand_value] = true;
-            print_matrix(gen_matrix, 3, n);
-            assert(it_matrix[j] != 0 &&
-                "generate_chains: illegal null pointer");
-            it_matrix[j]->next = malloc(sizeof(struct LListNode));
-            it_matrix[j] = it_matrix[j]->next;
-            // printf("generate_chains: rand_value: %d\n", rand_value + 1);
-            assert(rand_value + 1 >= 1 && rand_value + 1 <= n && 
-                "generate_chains: value not in range");
-            it_matrix[j]->value = rand_value + 1;
-            // print_matrix(gen_matrix, 3, n);
-        }
-    }
-    // printf("\nhey\n");
-    for (i = 0; i < n; ++i) {
-        if (i != common) {
-            assert(!(gen_matrix[0][i] == true &&
-                gen_matrix[1][i] == true &&
-                gen_matrix[2][i] == true) &&
-                "generate_chains: duplicate values");
-        }
-    }
-    for (i = 0; i < gen_matrix_size; ++i) {
-        free(gen_matrix[i]); gen_matrix[i] = 0;
-    }
-    free(gen_matrix); gen_matrix = 0;
+    fill_freq_arr(freq_arr, n, m);
+    fill_chains(it_matrix, freq_arr, n, m);
+    free(freq_arr); freq_arr = 0;
+
     for (i = 0; i < it_matrix_size; ++i) {
         assert(it_matrix[i] != 0 &&
             "generate_chains: illegal null pointer");
         it_matrix[i]->next = 0;
     }
-    int positions[3];
-    int *used_positions = calloc(m, sizeof(int));
-    for (i = 0; i < 3; ++i) {
-        int random_temp = rand() % m;
-        for (; used_positions[random_temp] == true;) {
-            printf("generate_chains: in positions generator\n");
-            random_temp = rand() % m;
-        }
-        used_positions[random_temp] = true;
-        positions[i] = random_temp;
-    }
-    // printf("positions: ");
-    // for (i = 0; i < 3; ++i) {
-    //     printf("%d ", positions[i]);
-    // }
-    // printf("\n");
-    free(used_positions); used_positions = 0;
-    assert(positions[0] != positions[1] &&
-        positions[0] != positions[2] &&
-        positions[1] != positions[2] &&
-        "generate_chains: common value in same common_indices");
-    it_matrix[0] = head_1;
-    it_matrix[1] = head_2;
-    it_matrix[2] = head_3;
-    for (i = 0; i < it_matrix_size; ++i) {
-        int j;
-        for (j = 0; j < positions[i]; ++j) {
-            assert(it_matrix[i] != 0 &&
-                "generate_chains: illegal null pointer");
-            it_matrix[i] = it_matrix[i]->next;
-        }
-        assert(it_matrix[i] != 0 &&
-            "generate_chains: illegal null pointer");
-        struct LListNode *head_to_swap;
-        if (i == 0) {
-            head_to_swap = head_1;
-        } else if (i == 1) {
-            head_to_swap = head_2;
-        } else if (i == 2) {
-            head_to_swap = head_3;
-        }
-        assert(head_to_swap != 0 &&
-            "generate_chains: illegal null pointer");
-        int temp = head_to_swap->value;
-        head_to_swap->value = it_matrix[i]->value;
-        it_matrix[i]->value = temp;
-    }
-    int common_indices[3] = {0, 0, 0};
-    it_matrix[0] = head_1;
-    it_matrix[1] = head_2;
-    it_matrix[2] = head_3;
-    for (i = 0; i < it_matrix_size; ++i) {
-        int j;
-        for (j = 0; j < n; ++j) {
-            assert(it_matrix[i] != 0 &&
-                "generate_chains: illegal null pointer");
-            if (it_matrix[i]->value == common + 1) {
-                break;
-            }
-            it_matrix[i] = it_matrix[i]->next;
-        }
-        common_indices[i] = j;
-        assert(j < n &&
-            "generate_chains: common value could not be found in check");
-    }
     free(it_matrix); it_matrix = 0;
     print_chains(head_1, head_2, head_3, n, m);
-    assert(common_indices[0] != common_indices[1] &&
-            common_indices[0] != common_indices[2] &&
-            common_indices[1] != common_indices[2] &&
-            "generate_chains: common value in same common_indices");
     printf("generate_chains: returning\n");
 }
 
@@ -318,14 +287,11 @@ void passw_3() {
     struct LListNode *head_1 = malloc(sizeof(struct LListNode));
     struct LListNode *head_2 = malloc(sizeof(struct LListNode));
     struct LListNode *head_3 = malloc(sizeof(struct LListNode));
+    head_1->value = 0;
+    head_2->value = 0;
+    head_3->value = 0;
     generate_chains(head_1, head_2, head_3, n, m);
     print_chains(head_1, head_2, head_3, n, m);
-    // find_common_number();
-    // print_common_number();
-    // find_displacements();
-    // print_displacements();
-    // rotate();
-    // print_final_state();
     free_chains(head_1, head_2, head_3, n, m);
     return;
 }
