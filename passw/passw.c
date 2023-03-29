@@ -63,11 +63,11 @@ struct NM *read_input() {
     n = read_int();
     printf("m-i gir: ");
     m = read_int();
-    unsigned less_than_one = n < 1 || m < 1;
+    unsigned less_than_3 = n < 3 || m < 3;
     unsigned n_not_bigger = n <= m;
-    while (less_than_one == true || n_not_bigger == true) {
-        if (less_than_one == true) {
-            printf("N ve M birden cok olmali, ");
+    while (less_than_3 == true || n_not_bigger == true) {
+        if (less_than_3 == true) {
+            printf("N ve M ikiden cok olmali, ");
         } else if (n_not_bigger == true) {
             printf("N, M-den buyuk olmali, ");
         } else {
@@ -77,7 +77,7 @@ struct NM *read_input() {
         n = read_int();
         printf("m-i gir: ");
         m = read_int();
-        less_than_one = n < 1 || m < 1;
+        less_than_3 = n < 3 || m < 3;
         n_not_bigger = n <= m;
     }
     struct NM *nm = malloc(sizeof(struct NM));
@@ -98,13 +98,16 @@ struct LList {
 int is_duplicate(int rand_val, int current_index,
     int **gen_matrix, int gen_matrix_size) {
     int i;
+    int result = 1;
     for (i = 0; i < gen_matrix_size; ++i) {
         if (i != current_index
             && gen_matrix[i][rand_val] == false) {
-            return 0;
+            result = 0;
+            break;
         }
     }
-    return 1;
+    // printf("is_duplicate: returning %d\n", result);
+    return result;
 }
 
 void print_matrix(int **matrix, int row_count,
@@ -172,30 +175,27 @@ void generate_chains(struct LListNode *head_1,
     for (i = 0; i < m - 1; ++i) {
         int j;
         for (j = 0; j < gen_matrix_size; ++j) {
-            int rand_value = rand() % n - 1;
-            do {
-                ++rand_value;
-                for (; gen_matrix[j][rand_value] == true; ) {
-                    ++rand_value;
-                    if (rand_value >= n) {
-                        rand_value = 0;
-                    }
-                } 
-            } while (is_duplicate(
-                rand_value, j, gen_matrix, 
-                gen_matrix_size) == true);
+            int rand_value = rand() % n;
+            for (; gen_matrix[j][rand_value] == true || 
+                is_duplicate(rand_value, j,
+                gen_matrix, gen_matrix_size) == true;) {
+                // printf("\nhey\n");
+                rand_value = rand() % n;
+            }
             gen_matrix[j][rand_value] = true;
+            print_matrix(gen_matrix, 3, n);
             assert(it_matrix[j] != 0 &&
                 "generate_chains: illegal null pointer");
-            it_matrix[j]->next = malloc(
-                sizeof(struct LListNode));
+            it_matrix[j]->next = malloc(sizeof(struct LListNode));
             it_matrix[j] = it_matrix[j]->next;
+            // printf("generate_chains: rand_value: %d\n", rand_value + 1);
             assert(rand_value + 1 >= 1 && rand_value + 1 <= n && 
                 "generate_chains: value not in range");
             it_matrix[j]->value = rand_value + 1;
             // print_matrix(gen_matrix, 3, n);
         }
     }
+    // printf("\nhey\n");
     for (i = 0; i < n; ++i) {
         if (i != common) {
             assert(!(gen_matrix[0][i] == true &&
@@ -218,6 +218,7 @@ void generate_chains(struct LListNode *head_1,
     for (i = 0; i < 3; ++i) {
         int random_temp = rand() % m;
         for (; used_positions[random_temp] == true;) {
+            printf("generate_chains: in positions generator\n");
             random_temp = rand() % m;
         }
         used_positions[random_temp] = true;
