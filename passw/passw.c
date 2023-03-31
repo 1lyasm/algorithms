@@ -1,38 +1,43 @@
 #include <stdio.h>
+#include <assert.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <errno.h>
 
-void handle_inp_err(FILE *stream, char *caller_name,
-    char *err_msg) {
-    fprintf(stream, "%s: %s\n", caller_name, err_msg);
+int do_conversion(long *val_1, long *val_2, char *buf) {
+    char *end_ptr;
+    *val_1 = strtol(buf, &end_ptr, 10);
+    *val_2 = strtol(end_ptr, &end_ptr, 10);
+    if (*val_1 == 0 || *val_2 == 0 ||
+        errno == ERANGE) return -1;
+    return 0;
 }
 
-void read_int(FILE* stream, int* result) {
-    #define read_int_max_size 10
-    char buffer[read_int_max_size] = {'\n'};
-    for (; buffer[0] == '\n';) {
-        if (fgets(buffer, read_int_max_size, stream) == 0)
-            handle_inp_err(stream, "read_int", "unknown error");
+int validate_input(long n, long m) {
+    if (n <= m || n <= 0 || m <= 0) return -1;
+    return 0;
+}
+
+void take_input(long *n, long *m) {
+    printf("N, M-i gir: ");
+    char buf[256];
+    do { fgets(buf, sizeof(buf), stdin);
+    } while (buf[0] == '\n');
+    if (do_conversion(n, m, buf) == -1) {
+        printf("error reading input, try again\n");
+        take_input(n, m);
+    } else if (validate_input(*n, *m) == -1) {
+        printf("invalid input, try again\n");
+        take_input(n, m);
     }
 }
 
-void take_input(FILE* stream, int *int_1, int *int_2) {
-    fprintf(stream, "N-i gir: ");
-    read_int(stdin, int_1);
-    fprintf(stream, "M-i gir: ");
-    read_int(stdin, int_2);
+void passw() {
+    long n, m;
+    take_input(&n, &m);
 }
 
-void passw(FILE *stream) {
-    int n, m;
-    take_input(stream, &n, &m);
-
-}
-
-#ifndef FOR_TESTING
 int main() {
-    int repeat_count = 3;
-    int i;
-    for (i = 0; i < repeat_count; ++i) passw(stdin);
-    return 0;
+    passw();
 }
-#endif
