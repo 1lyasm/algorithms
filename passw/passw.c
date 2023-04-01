@@ -23,14 +23,12 @@ int validate_input(long n, long m) {
 void take_input(long *n, long *m) {
     printf("N, M-i gir: ");
     char buf[256];
-    do {
-        fgets(buf, sizeof(buf), stdin);
+    do { fgets(buf, sizeof(buf), stdin);
     } while (buf[0] == '\n');
     if (do_conversion(n, m, buf) == -1) {
         printf("girdi okunamadi, yeniden deneyin\n");
         take_input(n, m);
-    }
-    else if (validate_input(*n, *m) == -1) {
+    } else if (validate_input(*n, *m) == -1) {
         printf("yanlis girdi, yeniden deneyin\n");
         take_input(n, m);
     }
