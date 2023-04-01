@@ -144,9 +144,9 @@ void fill_lists_but_last(struct LList *lists,
     for (i = 0; i < n_lists - 1; ++i) {
         int j;
         for (j = 0; j < list_size - 1; ++j)
-            push_node(&lists[i], generate(&gen));
-        restart_gen(&gen, max_val);
-        del_entry(&gen, find_entry(&gen, common));
+            push_node(&lists[i], generate(gen));
+        restart_gen(gen, max_val);
+        del_entry(gen, find_entry(gen, common));
     }
 }
 
@@ -154,11 +154,11 @@ void fill_last_list(struct LList *lists, int list_size,
     struct UniqueRandGen *gen) {
     int i;
     for (i = 0; i < list_size - 1; ++i) {
-        int rand_val = generate(&gen);
+        int rand_val = generate(gen);
         while (has_value(&lists[0], rand_val) == 1
             && has_value(&lists[1], rand_val) == 1) {
-            insert_entry(&gen, rand_val);
-            rand_val = generate(&gen);
+            insert_entry(gen, rand_val);
+            rand_val = generate(gen);
         }
         push_node(&lists[list_size - 1], rand_val);
     }
