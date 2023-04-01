@@ -23,12 +23,14 @@ int validate_input(long n, long m) {
 void take_input(long *n, long *m) {
     printf("N, M-i gir: ");
     char buf[256];
-    do { fgets(buf, sizeof(buf), stdin);
+    do {
+        fgets(buf, sizeof(buf), stdin);
     } while (buf[0] == '\n');
     if (do_conversion(n, m, buf) == -1) {
         printf("girdi okunamadi, yeniden deneyin\n");
         take_input(n, m);
-    } else if (validate_input(*n, *m) == -1) {
+    }
+    else if (validate_input(*n, *m) == -1) {
         printf("yanlis girdi, yeniden deneyin\n");
         take_input(n, m);
     }
@@ -48,7 +50,7 @@ struct LList {
     struct LListNode *tail;
 };
 
-void print_list(struct LList* list) {
+void print_list(struct LList *list) {
     assert(list->head != 0 && "print_list: empty list");
     struct LListNode *it = list->head;
     do {
@@ -82,6 +84,17 @@ int has_value(struct LList *list, int val) {
     return 0;
 }
 
+void del_list(struct LList *list) {
+    struct LListNode *head_copy = list->head,
+        *it = list->head, *next_it;
+    do {
+        next_it = it->next;
+        free(it);
+        it = 0;
+        it = next_it;
+    } while (it != head_copy);
+}
+
 struct UniqueRandGen {
     int pool_size;
     int *pool;
@@ -92,11 +105,11 @@ int find_entry(struct UniqueRandGen *gen, int entry) {
     for (i = 0; i < gen->pool_size; ++i) {
         if (gen->pool[i] == entry) return i;
     }
-    assert(1 == 0 && 
+    assert(1 == 0 &&
         "find_entry: non-existent entry not allowed");
 }
 
-void del_entry(struct UniqueRandGen *gen, 
+void del_entry(struct UniqueRandGen *gen,
     int entry_idx) {
     gen->pool[entry_idx] = gen->pool[gen->pool_size - 1];
     --gen->pool_size;
@@ -175,18 +188,30 @@ void fill_lists(struct LList *lists, int n_lists,
     del_gen(&gen);
 }
 
+void print_lists(struct LList *lists, int n_lists) {
+    int i;
+    for (i = 0; i < n_lists; ++i) print_list(&lists[i]);
+}
+
 void fill_and_print(struct LList *lists,
     int n_lists, int common, int n, int m) {
     fill_lists(lists, n_lists, n, m, common);
+    print_lists(lists, n_lists);
+}
+
+void del_lists(struct LList *lists, int n_lists) {
+    int i;
+    for (i = 0; i < n_lists; ++i) del_list(&lists[i]);
 }
 
 void passw() {
     long n, m;
     take_input(&n, &m);
     int common = gen_common(n);
-    struct LList lists[3] = {{0}};
+    struct LList lists[3] = { {0} };
     int n_lists = sizeof(lists) / sizeof(lists[0]);
     fill_and_print(lists, n_lists, common, n, m);
+    del_lists(lists, n_lists);
 }
 
 int main() {
