@@ -16,7 +16,7 @@ int do_conversion(long *val_1, long *val_2, char *buf) {
 }
 
 int validate_input(long n, long m) {
-    if (n <= m || n <= 0 || m <= 0) return -1;
+    if (n <= m || n <= 2 || m <= 2) return -1;
     return 0;
 }
 
@@ -161,8 +161,8 @@ void fill_lists_but_last(struct LList *lists,
     }
 }
 
-void fill_last_list(struct LList *lists, int list_size,
-    struct UniqueRandGen *gen) {
+void fill_last_list(struct LList *lists, int n_lists,
+    int list_size, struct UniqueRandGen *gen) {
     int i;
     for (i = 0; i < list_size - 1; ++i) {
         int rand_val = generate(gen);
@@ -171,7 +171,7 @@ void fill_last_list(struct LList *lists, int list_size,
             insert_entry(gen, rand_val);
             rand_val = generate(gen);
         }
-        push_node(&lists[list_size - 1], rand_val);
+        push_node(&lists[n_lists - 1], rand_val);
     }
 }
 
@@ -182,7 +182,7 @@ void fill_lists(struct LList *lists, int n_lists,
     del_entry(&gen, find_entry(&gen, common));
     fill_lists_but_last(lists, n_lists,
         max_val, list_size, common, &gen);
-    fill_last_list(lists, list_size, &gen);
+    fill_last_list(lists, n_lists, list_size, &gen);
     del_gen(&gen);
 }
 
