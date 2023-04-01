@@ -1,0 +1,1 @@
+clang passw.c -o passw
