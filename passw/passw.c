@@ -407,4 +407,5 @@ int main() {
     srand(time(0));
     int i, repetition_cnt = 3;
     for (i = 0; i < repetition_cnt; ++i) passw();
+    return 0;
 }
