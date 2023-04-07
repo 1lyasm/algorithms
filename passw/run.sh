@@ -1,1 +1,0 @@
-clang -ansi -fsanitize=address passw.c -o passw
