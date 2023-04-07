@@ -6,3 +6,5 @@
 *.out
 .vscode
 *.pyc
+*.bat
+*.sh
