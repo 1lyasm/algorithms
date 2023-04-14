@@ -1,6 +1,4 @@
 #include "bst_delete.h"
-#include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 struct TreeNode *deleteNode(struct TreeNode *root, int key) {
