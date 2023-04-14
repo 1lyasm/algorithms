@@ -440,44 +440,6 @@ void PageRank::test() {
     std::cout << "PASSED";
 }
 
-std::string LongestPalindrome::longestPalindrome(std::string s) {
-    int StringLength = s.size();
-    int MaximumPalindromeLength = 0;
-    int StartIndex = -1;
-    for (int I = 0; I < StringLength; ++I) {
-        int LeftIndex = I - 1, RightIndex = I + 1;
-        for (;LeftIndex >= 0 && RightIndex < StringLength &&
-            s[LeftIndex] == s[RightIndex];
-            --LeftIndex, ++RightIndex);
-        int NewLength = RightIndex - LeftIndex - 1;
-        if (NewLength > MaximumPalindromeLength) {
-            MaximumPalindromeLength = NewLength;
-            StartIndex = LeftIndex + 1;
-        }
-        LeftIndex = I, RightIndex = I + 1;
-        for (;LeftIndex >= 0 && RightIndex < StringLength &&
-            s[LeftIndex] == s[RightIndex];
-            --LeftIndex, ++RightIndex);
-        NewLength = RightIndex - LeftIndex - 1;
-        if (NewLength > MaximumPalindromeLength) {
-            MaximumPalindromeLength = NewLength;
-            StartIndex = LeftIndex + 1;
-        }
-    }
-    return s.substr(StartIndex, MaximumPalindromeLength);
-}
-
-void LongestPalindrome::test() {
-    std::cout << "Testing LongestPalindrome: ";
-    assert(LongestPalindrome::longestPalindrome("babad") == "bab" ||
-            LongestPalindrome::longestPalindrome("babad") == "aba");
-    assert(LongestPalindrome::longestPalindrome("cbbd") == "bb");
-    assert(LongestPalindrome::longestPalindrome("e") == "e");
-    assert(LongestPalindrome::longestPalindrome("abcdbbfcba") == "bb");
-    assert(LongestPalindrome::longestPalindrome("ccc") == "ccc");
-    std::cout << "PASSED";
-}
-
 std::string ZigzagConversion::zigzag_conv(std::string s,
     int row_count) {
     if (s.size() < 2 || row_count == 1) {
