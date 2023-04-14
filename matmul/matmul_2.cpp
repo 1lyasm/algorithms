@@ -49,19 +49,19 @@ void MatrixMul(int *result, int *a, int *b) {
 }
 
 int main() {
-        int a[mtx_size] = {1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8};
-        int b[mtx_size] = {1, 2, 3, 4, 5, 6, 7, 8, 8, 7, 6, 5, 4, 3, 2, 1};
-        int result[mtx_size];
+  int a[mtx_size] = {1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8};
+  int b[mtx_size] = {1, 2, 3, 4, 5, 6, 7, 8, 8, 7, 6, 5, 4, 3, 2, 1};
+  int result[mtx_size];
 
-        MatrixMul(result, a, b);
+  MatrixMul(result, a, b);
 
-        for (int i = 0; i < 4; i++) {
-          for (int j = 0; j < 4; j++) {
-            std::cout << result[i * 4 + j] << " "
-                      << "\n";
-          }
-          std::cout << "\n";
-        }
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      std::cout << result[i * 4 + j] << " "
+                << "\n";
+    }
+    std::cout << "\n";
+  }
 
-        return 0;
+  return 0;
 }

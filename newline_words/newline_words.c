@@ -14,14 +14,15 @@ int main() {
   int i = 0;
   char unit_length_string[] = "0";
   while (input_string[i] != '\0') {
-    _asm {// Put current character in dl
+    _asm {
+      // Put current character in dl
 			mov edx, i
 			mov dl, input_string[edx]
 
 			cmp dl, ' '
 			jne print_character
 
-              // Print new_line
+          // Print new_line
 			lea eax, new_line
 			push eax
 
@@ -30,7 +31,7 @@ int main() {
 
 			call printf
 
-                  // Clear stack
+              // Clear stack
 			pop ebx
 			pop ebx
 			
@@ -46,7 +47,7 @@ int main() {
 
 			call printf
 
-                  // Clear stack
+              // Clear stack
 			pop ebx
 			pop ebx
 		end:
