@@ -1,15 +1,14 @@
 #include <iostream>
 
-void matmul(int* a, int n_a, int m_a,
-	int* b, int n_b, int m_b, int* c) {
-		/*
-		*	for all rows row_i in matrix a
-		*		for all columns col_j in matrix b
-		*			c[i, j] = 0
-		*			for k : [0, len(row_i))
-		*				c[i, j] += a[i, k] * b[k, j]
-		*/
-	__asm {
+void matmul(int *a, int n_a, int m_a, int *b, int n_b, int m_b, int *c) {
+  /*
+   *	for all rows row_i in matrix a
+   *		for all columns col_j in matrix b
+   *			c[i, j] = 0
+   *			for k : [0, len(row_i))
+   *				c[i, j] += a[i, k] * b[k, j]
+   */
+  __asm {
 		; dl: i
 		xor dl, dl
 
@@ -78,43 +77,42 @@ void matmul(int* a, int n_a, int m_a,
 
 
 	L1: ; exit
-	}
+  }
 }
 
-int main()
-{
-	int n_a = 2, m_a = 3;
-	int n_b = 3, m_b = 4;
-	int* a = nullptr;
-	int* b = nullptr;
-	int* c = nullptr;
-	a = new int[n_a * m_a];
-	b = new int[n_b * m_b];
-	c = new int[n_a * m_b];
+int main() {
+  int n_a = 2, m_a = 3;
+  int n_b = 3, m_b = 4;
+  int *a = nullptr;
+  int *b = nullptr;
+  int *c = nullptr;
+  a = new int[n_a * m_a];
+  b = new int[n_b * m_b];
+  c = new int[n_a * m_b];
 
-	for (int i = 0; i < n_a * m_a; i++) {
-		a[i] = i;
-	}
+  for (int i = 0; i < n_a * m_a; i++) {
+    a[i] = i;
+  }
 
-	for (int j = 0; j < n_b * m_b; j++) {
-		b[j] = n_b * m_b - j;
-	}
+  for (int j = 0; j < n_b * m_b; j++) {
+    b[j] = n_b * m_b - j;
+  }
 
-	// for (int i = 0; i < n_a * m_a; i++) {
-	// 	std::cout << a[i] << " ";
-	// }
+  // for (int i = 0; i < n_a * m_a; i++) {
+  // 	std::cout << a[i] << " ";
+  // }
 
-	// for (int j = 0; j < n_b * m_b; j++) {
-	// 	std::cout << b[j] << " ";
-	// }
+  // for (int j = 0; j < n_b * m_b; j++) {
+  // 	std::cout << b[j] << " ";
+  // }
 
-	matmul(a, n_a, m_a, b, n_b, m_b, c);
+  matmul(a, n_a, m_a, b, n_b, m_b, c);
 
-	for (int i = 0; i < n_a; i++){
-		for (int j = 0; j < m_b; j++) {
-			std::cout << c[m_b * i + j] << " ";
-		}
-		std::cout << "\n";
-	}
-	return 0;
+  for (int i = 0; i < n_a; i++) {
+    for (int j = 0; j < m_b; j++) {
+      std::cout << c[m_b * i + j] << " ";
+    }
+    std::cout << "\n";
+  }
+  return 0;
 }

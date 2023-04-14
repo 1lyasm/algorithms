@@ -2,27 +2,26 @@
 #include <string>
 #include <vector>
 
-void take_inp(int* arr, int n, int n_char) {
-    std::string dummy;
-	for (int i = 0; i < n; i++) {
-        std::getline(std::cin, dummy);
-		arr[n_char * i] = dummy[0];
-		arr[n_char * i + 1] = dummy[1];
-		arr[n_char * i + 2] = dummy[2];
-	} 
-	return;
+void take_inp(int *arr, int n, int n_char) {
+  std::string dummy;
+  for (int i = 0; i < n; i++) {
+    std::getline(std::cin, dummy);
+    arr[n_char * i] = dummy[0];
+    arr[n_char * i + 1] = dummy[1];
+    arr[n_char * i + 2] = dummy[2];
+  }
+  return;
 }
 
-
-int solve(int* arr, int n) {
-	/*
-	* for i : [1, n]
-	*	if there is 43 (+), increment result
-	*	if there is 45 (-), decrement result
-	* 
-	*/
-	int result = 0;
-	__asm {
+int solve(int *arr, int n) {
+  /*
+   * for i : [1, n]
+   *	if there is 43 (+), increment result
+   *	if there is 45 (-), decrement result
+   *
+   */
+  int result = 0;
+  __asm {
 		xor edx, edx
 		xor ecx, ecx
 	L3:	mov ebx, edx
@@ -54,25 +53,23 @@ int solve(int* arr, int n) {
 		inc ecx
 		cmp ecx, n
 		jb L3
-	}
-	return result;
+  }
+  return result;
 }
 
-int main()
-{
-	int n_char = 3;
-	int n;
-	std::cin >> n;
-	std::cin.ignore();
+int main() {
+  int n_char = 3;
+  int n;
+  std::cin >> n;
+  std::cin.ignore();
 
-	int* arr = nullptr;
-	arr = new int[n * n_char];
+  int *arr = nullptr;
+  arr = new int[n * n_char];
 
-	take_inp(arr, n, n_char);
+  take_inp(arr, n, n_char);
 
-	int result = solve(arr, n);
-	std::cout << result << "\n";
+  int result = solve(arr, n);
+  std::cout << result << "\n";
 
-	return 0;
+  return 0;
 }
-

@@ -4,4 +4,4 @@
 int amicable_sum(int uplim);
 int sum_divisors(int x);
 
-#endif  
+#endif

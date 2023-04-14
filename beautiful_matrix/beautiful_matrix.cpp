@@ -2,26 +2,25 @@
 #include <string>
 #include <vector>
 
-void take_inp(int* mtx, int n_row, int n_col) {
-	std::string dummy;
-	for (int i = 0; i < n_row; i++) {
-		std::getline(std::cin, dummy);
-		for (int j = 0; j < n_row; j++){
-			mtx[n_col * i + j] = dummy[2 * j] - 48;
-		}
-	}
-	return;
+void take_inp(int *mtx, int n_row, int n_col) {
+  std::string dummy;
+  for (int i = 0; i < n_row; i++) {
+    std::getline(std::cin, dummy);
+    for (int j = 0; j < n_row; j++) {
+      mtx[n_col * i + j] = dummy[2 * j] - 48;
+    }
+  }
+  return;
 }
 
-
-int solve(int* mtx, int n_row, int n_col) {
-	/*
-	* first find one
-	* (2 - row) + (2 - col), where (row, col) is position of one
-	*
-	*/
-	int result = 0;
-	__asm {
+int solve(int *mtx, int n_row, int n_col) {
+  /*
+   * first find one
+   * (2 - row) + (2 - col), where (row, col) is position of one
+   *
+   */
+  int result = 0;
+  __asm {
 		mov edx, mtx
 		xor ecx, ecx
 		L2:
@@ -72,25 +71,22 @@ int solve(int* mtx, int n_row, int n_col) {
 		cmp ecx, n_row
 		jbe L2
 	L3:
-	}
-	return result;
+  }
+  return result;
 }
 
-int main()
-{
-	// TODO: TAKE ABSOLUTE VALUES OF COORDINATE DIFFERENCES
+int main() {
+  // TODO: TAKE ABSOLUTE VALUES OF COORDINATE DIFFERENCES
 
+  int n_row = 5, n_col = 5;
 
-	int n_row = 5, n_col = 5;
+  int *mtx = nullptr;
+  mtx = new int[n_row * n_col];
 
-	int* mtx = nullptr;
-	mtx = new int[n_row * n_col];
+  take_inp(mtx, n_row, n_col);
 
-	take_inp(mtx, n_row, n_col);
+  int result = solve(mtx, n_row, n_col);
+  std::cout << result << "\n";
 
-	int result = solve(mtx, n_row, n_col);
-	std::cout << result << "\n";
-
-	return 0;
+  return 0;
 }
-

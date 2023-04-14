@@ -2,27 +2,27 @@
 #include <string>
 #include <vector>
 
-void take_inp(int* mtx, int n_row) {
-	std::vector<std::string> vec;
-	std::string dummy;
-	for (int i = 0; i < n_row; i++) {
-		std::getline(std::cin, dummy);
-		vec.push_back(dummy);
-	}
+void take_inp(int *mtx, int n_row) {
+  std::vector<std::string> vec;
+  std::string dummy;
+  for (int i = 0; i < n_row; i++) {
+    std::getline(std::cin, dummy);
+    vec.push_back(dummy);
+  }
 
-	int mtx_idx = 0;
-	for (auto x : vec) {
-		mtx[mtx_idx] = x[0] - 48;
-		mtx[mtx_idx + 1] = x[2] - 48;
-		mtx[mtx_idx + 2] = x[4] - 48;
-		mtx_idx += 3;
-	}
-	return;
+  int mtx_idx = 0;
+  for (auto x : vec) {
+    mtx[mtx_idx] = x[0] - 48;
+    mtx[mtx_idx + 1] = x[2] - 48;
+    mtx[mtx_idx + 2] = x[4] - 48;
+    mtx_idx += 3;
+  }
+  return;
 }
 
-int solve(int* mtx, int n_row) {
-	int result = 0;
-	__asm {
+int solve(int *mtx, int n_row) {
+  int result = 0;
+  __asm {
 
 	; bx: i
 		xor bx, bx
@@ -60,25 +60,23 @@ int solve(int* mtx, int n_row) {
 				and eax, 0ffffh
 				cmp eax, n_row
 				jb L2
-	}
-	return result;
+  }
+  return result;
 }
 
-int main()
-{	
-	int n_col = 3;
-	int n_row;
-	std::cin >> n_row;
-	std::cin.ignore();
+int main() {
+  int n_col = 3;
+  int n_row;
+  std::cin >> n_row;
+  std::cin.ignore();
 
-	int mtx_size = n_col * n_row;
-	int* mtx = nullptr;
-	mtx = new int[mtx_size];
+  int mtx_size = n_col * n_row;
+  int *mtx = nullptr;
+  mtx = new int[mtx_size];
 
-	take_inp(mtx, n_row);
-	int result = solve(mtx, n_row);
-	std::cout << result << "\n";
+  take_inp(mtx, n_row);
+  int result = solve(mtx, n_row);
+  std::cout << result << "\n";
 
-	return 0;
+  return 0;
 }
-

@@ -1,24 +1,23 @@
 #include <iostream>
 #include <string>
 
-int main()
-{
-	std::string line_1, line_2;
-	std::getline(std::cin, line_1);
-	std::getline(std::cin, line_2);
-	
-	int len = line_1.size();
-	int arr_len = 2 * len;
-	int* arr = nullptr;
-	arr = new int[2 * len];
+int main() {
+  std::string line_1, line_2;
+  std::getline(std::cin, line_1);
+  std::getline(std::cin, line_2);
 
-	for (int i = 0; i < len; i++) {
-		arr[i] = (int) (line_1[i]);
-		arr[len + i] = (int) (line_2[i]);
-	}
+  int len = line_1.size();
+  int arr_len = 2 * len;
+  int *arr = nullptr;
+  arr = new int[2 * len];
 
-	int result = 0;
-	__asm {
+  for (int i = 0; i < len; i++) {
+    arr[i] = (int)(line_1[i]);
+    arr[len + i] = (int)(line_2[i]);
+  }
+
+  int result = 0;
+        __asm {
 		; for i : [1, len(str))
 		xor ecx, ecx
 	L0:
@@ -65,7 +64,7 @@ int main()
 	L5: 
 	}
 
-	std::cout << result << "\n";
+        std::cout << result << "\n";
 
-	return 0;
+        return 0;
 }

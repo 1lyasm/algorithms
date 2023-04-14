@@ -2,30 +2,30 @@
 #include <string>
 #include <vector>
 
-void take_inp(int* arr, int n) {
-	for (int i = 0; i < n; i++) {
-		std::cin >> arr[i];
-	}
-	return;
+void take_inp(int *arr, int n) {
+  for (int i = 0; i < n; i++) {
+    std::cin >> arr[i];
+  }
+  return;
 }
 
-void print_inp(int* arr, int n) {
-	for (int i = 0; i < n; i++) {
-		std::cout << arr[i] << " ";
-	}
-	return;
+void print_inp(int *arr, int n) {
+  for (int i = 0; i < n; i++) {
+    std::cout << arr[i] << " ";
+  }
+  return;
 }
 
-
-int solve(int* arr, int n, int k) {
-	/*
-	* go to k-th element
-	* zero?
-	* if yes, count number of zeros to the left of that element, and return (k - count)
-	* if not, count number of elements to the right that have equal value, and return (k + count)
-	*/
-	int result = k;
-	__asm {
+int solve(int *arr, int n, int k) {
+  /*
+   * go to k-th element
+   * zero?
+   * if yes, count number of zeros to the left of that element, and return (k -
+   * count) if not, count number of elements to the right that have equal value,
+   * and return (k + count)
+   */
+  int result = k;
+  __asm {
 		mov esi, -1
 		; zero ?
 		mov eax, k
@@ -51,24 +51,22 @@ int solve(int* arr, int n, int k) {
 		inc esi
 		sub result, esi
 	L4:
-	}
-	return result;
+  }
+  return result;
 }
 
-int main()
-{
-	int n, k;
-	std::cin >> n >> k;
-	std::cin.ignore();
+int main() {
+  int n, k;
+  std::cin >> n >> k;
+  std::cin.ignore();
 
-	int* arr = nullptr;
-	arr = new int[n];
+  int *arr = nullptr;
+  arr = new int[n];
 
-	take_inp(arr, n);
+  take_inp(arr, n);
 
-	int result = solve(arr, n, k);
-	std::cout << result << "\n";
+  int result = solve(arr, n, k);
+  std::cout << result << "\n";
 
-	return 0;
+  return 0;
 }
-

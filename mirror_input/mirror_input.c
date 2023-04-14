@@ -4,18 +4,16 @@
 #define INPUT_BUFFER_LENGTH 2
 #define OUTPUT_LENGTH INPUT_BUFFER_LENGTH
 
-
 /*
-*  input: Single numeric character
-*  output: Input character. Exits in case of invalid input.
-*/
-
+ *  input: Single numeric character
+ *  output: Input character. Exits in case of invalid input.
+ */
 
 int main(void) {
-	char prompt[] = "Enter a character: ";
-	char prompt_format[] = "%s";
-	// Print prompt
-	__asm {
+  char prompt[] = "Enter a character: ";
+  char prompt_format[] = "%s";
+  // Print prompt
+  __asm {
 		lea eax, prompt
 		push eax
 
@@ -24,24 +22,24 @@ int main(void) {
 
 		call printf
 
-		// Clear stack
+                 // Clear stack
 		pop ebx
 		pop ebx
-	};
+  }
+  ;
 
+  char input[INPUT_BUFFER_LENGTH];
+  input[1] = '\0';
+  char input_format[] = "%c";
 
-	char input[INPUT_BUFFER_LENGTH];
-	input[1] = '\0';
-	char input_format[] = "%c";
+  char output_message[] = "Mirror of the input: ";
+  char output_format[] = "%s%s\n";
 
-	char output_message[] = "Mirror of the input: ";
-	char output_format[] = "%s%s\n";
+  char ignore_message[] = "Invalid input, ignored\n";
+  char ignore_message_format[] = "%s";
 
-	char ignore_message[] = "Invalid input, ignored\n";
-	char ignore_message_format[] = "%s";
-
-	_asm {
-		// Take input
+  _asm {
+    // Take input
 		lea eax, input
 		push eax
 
@@ -50,18 +48,18 @@ int main(void) {
 
 		call scanf
 
-		// Clean stack
+            // Clean stack
 		pop ebx
 		pop ebx
 
-		// Test input
+                // Test input
 		cmp input[0], '0'
 		jb ignore_input
 
 		cmp input[0], '9'
 		ja ignore_input
 
-		// Print input
+        // Print input
 
 		lea eax, input
 		push eax
@@ -73,8 +71,8 @@ int main(void) {
 		push eax
 
 		call printf
-		
-		// Clean stack
+
+            // Clean stack
 		pop ebx
 		pop ebx
 		pop ebx
@@ -90,13 +88,12 @@ int main(void) {
 
 		call printf
 
-		// Clean stack
+            // Clean stack
 		pop ebx
 		pop ebx
 
 		exit:
-	}
+  }
 
-	return 0;
+  return 0;
 }
-
