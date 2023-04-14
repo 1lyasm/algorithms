@@ -16,5 +16,4 @@ class Solution:
              cur = cur.left
           root.val = cur.val
           root.right = self.deleteNode(root.right, cur.val)
-          return root
         return root
