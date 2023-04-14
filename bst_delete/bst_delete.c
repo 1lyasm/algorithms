@@ -37,6 +37,5 @@ struct TreeNode *deleteNode(struct TreeNode *root, int key) {
   if (deleted == root) {
     newRoot = newChild;
   }
-  free(deleted);
   return newRoot;
 }
