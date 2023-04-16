@@ -12,10 +12,8 @@ struct Codec {
   }
 
   int chars_to_int(std::string &s, std::string::size_type ind) {
-    int16_t upper = static_cast<int16_t>(
-        static_cast<uint16_t>(static_cast<uint16_t>(s[2 * ind]) << 8));
-    int16_t lower = s[2 * ind + 1] & 0xff;
-    return static_cast<int>(upper | lower);
+    uint8_t upper = s[2 * ind], lower = s[2 * ind + 1];
+    return static_cast<int>(static_cast<int16_t>((upper << 8)) | lower);
   }
 
   std::string serialize(TreeNode *root) {
