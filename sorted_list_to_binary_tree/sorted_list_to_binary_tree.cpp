@@ -19,18 +19,18 @@ public:
     if (head == nullptr) {
       return nullptr;
     }
-    TreeNode *root = new TreeNode(0);
+    TreeNode *root = new TreeNode();
     int counter = 1;
     std::deque<TreeNode *> parents = {root};
     int nodeCount = list_size(head);
     while (counter < nodeCount) {
-      parents.front()->left = new TreeNode(counter);
+      parents.front()->left = new TreeNode();
       parents.push_back(parents.front()->left);
       ++counter;
       if (counter >= nodeCount) {
         break;
       }
-      parents.front()->right = new TreeNode(counter);
+      parents.front()->right = new TreeNode();
       parents.push_back(parents.front()->right);
       ++counter;
       if (counter >= nodeCount) {
