@@ -41,7 +41,7 @@ typedef struct ListTreeNodePtr {
   int len;
 } ListTreeNodePtr;
 
-static void printList(struct List *list) {
+static void printList(List *list) {
   ListNode *it = list->head;
   do {
     printf("%d   ", it->val);
@@ -186,10 +186,10 @@ static void takeInp(long *val_1, long *val_2, char *prompt) {
     printf("Invalid input, try again\n");
     takeInp(val_1, val_2, prompt);
   }
-  if (verifyInput(*val_1, *val_2) == 1) {
-    printf("Invalid input, try again\n");
-    takeInp(val_1, val_2, prompt);
-  }
+  // if (verifyInput(*val_1, *val_2) == 1) {
+  //   printf("Invalid input, try again\n");
+  //   takeInp(val_1, val_2, prompt);
+  // }
 }
 
 static void generateSortedList(List *list, int maxVal, int nodeCount) {
@@ -209,7 +209,6 @@ static void generateSortedList(List *list, int maxVal, int nodeCount) {
         break;
       }
     }
-    printf("%d: inserting %d\n", j, randVal);
     insertAtIndList(list, j, randVal);
   }
 }
@@ -318,7 +317,6 @@ static TreeNode *generateBST(int maxVal, int nodeCount) {
   TreeNode *root;
   generateSortedList(&list, maxVal, nodeCount);
   root = sortedListToBST(&list);
-  printList(&list);
   delList(&list);
   return root;
 }
@@ -334,7 +332,38 @@ static void freeTree(TreeNode *root) {
   freeTree(rs);
 }
 
-static TreeNode *dropFruit(TreeNode *root) { return root; }
+static TreeNode *deleteNode(TreeNode *root, int key) {
+  if (root == 0) {
+    return 0;
+  }
+  if (key < root->originalVal) {
+    root->left = deleteNode(root->left, key);
+  } else if (key > root->originalVal) {
+    root->right = deleteNode(root->right, key);
+  } else {
+    if (root->left == 0) {
+      return root->right;
+    } else if (root->right == 0) {
+      return root->left;
+    }
+    struct TreeNode *cur = root->right;
+    while (cur->left != 0) {
+      cur = cur->left;
+    }
+    root->originalVal = cur->originalVal;
+    root->currentVal = cur->currentVal;
+    root->right = deleteNode(root->right, root->originalVal);
+  }
+  return root;
+}
+
+static void printStack(Stack *st) {
+  int i = 0;
+  printf("\n\nbucket: ");
+  for (i = 0; i < st->top; ++i) {
+    printf("%d ", st->arr[i]);
+  }
+}
 
 static void pushBackStack(Stack *st, int item) { st->arr[st->top++] = item; }
 
@@ -355,17 +384,25 @@ static int damage(TreeNode *root, long val, long power, Stack *bucket) {
   }
   cur->currentVal -= power;
   if (cur->currentVal <= 0) {
-    if (cur == cur->parent->left) {
-      cur->parent->left = dropFruit(cur);
+    pushBackStack(bucket, cur->originalVal);
+    if (cur->parent == 0) {
+      if (cur->left != 0) {
+        cur->parent = cur->left;
+        cur->left = 0;
+        cur->parent->right = deleteNode(cur, val);
+        return 0;
+      } else if (cur->right != 0) {
+        cur->parent = cur->right;
+        cur->right = 0;
+        cur->parent->left = deleteNode(cur, val);
+        return 0;
+      }
+    } else if (cur == cur->parent->left) {
+      cur->parent->left = deleteNode(cur, val);
+      return 0;
     } else {
-      cur->parent->right = dropFruit(cur);
-    }
-    pushBackStack(bucket, dropFruit(cur)->originalVal);
-    parentIt = cur->parent;
-    printf("dropping: %d\n%s", cur->originalVal, "its parents: ");
-    while (parentIt != 0) {
-      printf("%d ", parentIt->originalVal);
-      parentIt = parentIt->parent;
+      cur->parent->right = deleteNode(cur, val);
+      return 0;
     }
   }
   return 0;
@@ -379,6 +416,7 @@ static void play(TreeNode *root) {
   bucket.arr = calloc(1024, sizeof(int));
   while (root != 0) {
     printTree(root);
+    printStack(&bucket);
     takeInp(&k, &p, "\n\nvalue of fruit (k) and attack power (p): ");
     attackResult = damage(root, k, p, &bucket);
     if (attackResult == 1) {
