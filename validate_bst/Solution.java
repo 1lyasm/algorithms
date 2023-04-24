@@ -1,9 +1,7 @@
 import java.util.Stack;
 
 class Test {
-  public static void main(String[] args) {
-    ;
-  }
+  public static void main(String[] args) { ; }
 }
 
 class TreeNode {
@@ -11,12 +9,9 @@ class TreeNode {
   TreeNode left;
   TreeNode right;
 
-  TreeNode() {
-  }
+  TreeNode() {}
 
-  TreeNode(int val) {
-    this.val = val;
-  }
+  TreeNode(int val) { this.val = val; }
 
   TreeNode(int val, TreeNode left, TreeNode right) {
     this.val = val;
