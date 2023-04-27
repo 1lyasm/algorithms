@@ -2,8 +2,7 @@
 
 #include <fstream>
 
-void FileReader::read(std::string &fileName, std::string *fileAsStr)
-{
+void FileReader::read(std::string &fileName, std::string *fileAsStr) {
   std::ifstream sourceFile(fileName);
   return;
 }

@@ -1,9 +1,8 @@
-#include <iostream>
 #include "source.h"
+#include <iostream>
 #include <print>
 
-int main()
-{
+int main() {
   auto source = Source("test.cpp");
   std::print();
   return 0;

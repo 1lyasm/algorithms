@@ -5,8 +5,7 @@
 
 #include <string>
 
-class Source
-{
+class Source {
 private:
   std::string fileName;
   std::string fileAsStr;

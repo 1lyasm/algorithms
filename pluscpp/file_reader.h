@@ -3,8 +3,7 @@
 
 #include <string>
 
-class FileReader
-{
+class FileReader {
   static void read(std::string &fileName, std::string *fileAsStr);
 };
 
