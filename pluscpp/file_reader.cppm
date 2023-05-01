@@ -1,7 +1,7 @@
 module;
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
 export module file_reader;
 
 export class FileReader {
