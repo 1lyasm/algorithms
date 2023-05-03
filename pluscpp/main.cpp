@@ -1,6 +1,4 @@
-import source;
-
-int main() {
-  auto source = Source("test.cpp");
+int main()
+{
   return 0;
 }
