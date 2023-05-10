@@ -13,40 +13,28 @@ public class Customer {
     this.identityID = identityID;
   }
 
-  public String getName() {
-    return name;
-  }
+  public String getName() { return name; }
 
-  public int getIdentityID() {
-    return identityID;
-  }
+  public int getIdentityID() { return identityID; }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  public void setName(String name) { this.name = name; }
 
-  public void setIdentityID(int identityID) {
-    this.identityID = identityID;
-  }
+  public void setIdentityID(int identityID) { this.identityID = identityID; }
 
   public void setRezervations(ArrayList<Rezervation> rezervations) {
     this.rezervations = rezervations;
   }
 
-  public ArrayList<Rezervation> getRezervations() {
-    return rezervations;
-  }
+  public ArrayList<Rezervation> getRezervations() { return rezervations; }
 
-  public void listCustomerRezervations() {
-    System.out.println(rezervations);
-  }
+  public void listCustomerRezervations() { System.out.println(rezervations); }
 
   public void getInvoice(int rezervationID) {
-    for (Rezervation rezervation: rezervations) {
+    for (Rezervation rezervation : rezervations) {
       if (rezervation.getRezervationID() == rezervationID) {
         rezervation.calculatePayment();
       }
-    } 
+    }
   }
 
   public void makeRezervation(Hotel hotel, String roomType, int day) {
@@ -55,8 +43,8 @@ public class Customer {
       Room room = rooms.get(i);
       if (room.isAvailable() && roomType.equals(room.getRoomType())) {
         room.setAvailable(false);
-        Rezervation newRezervation = new Rezervation(
-          hotel, room.getRoomNumber(), day);
+        Rezervation newRezervation =
+            new Rezervation(hotel, room.getRoomNumber(), day);
         rezervations.add(newRezervation);
         return;
       }

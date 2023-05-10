@@ -16,61 +16,40 @@ public class Rezervation {
     ++counter;
   }
 
+  public static void setCounter(int counter) { Rezervation.counter = counter; }
 
-  public static void setCounter(int counter) {
-    Rezervation.counter = counter;
-  }
-
-  public static int getCounter() {
-    return counter;
-  }
+  public static int getCounter() { return counter; }
 
   @Override
   public String toString() {
-    return "Rezervation [rezervationID=" + rezervationID + ", hotel=" + hotel + ", roomNumber=" + roomNumber + ", day="
-        + day + "]\n\n";
+    return "Rezervation [rezervationID=" + rezervationID + ", hotel=" + hotel +
+        ", roomNumber=" + roomNumber + ", day=" + day + "]\n\n";
   }
 
   public void setRezervationID(int rezervationID) {
     this.rezervationID = rezervationID;
   }
-  
-  public void setHotel(Hotel hotel) {
-    this.hotel = hotel;
-  }
-  
-  public void setRoomNumber(int roomNumber) {
-    this.roomNumber = roomNumber;
-  }
-  
-  public void setDay(int day) {
-    this.day = day;
-  }
-  
-  public int getRezervationID() {
-    return rezervationID;
-  }
-  
-  public Hotel getHotel() {
-    return hotel;
-  }
-  
-  public int getRoomNumber() {
-    return roomNumber;
-  }
-  
-  public int getDay() {
-    return day;
-  }
+
+  public void setHotel(Hotel hotel) { this.hotel = hotel; }
+
+  public void setRoomNumber(int roomNumber) { this.roomNumber = roomNumber; }
+
+  public void setDay(int day) { this.day = day; }
+
+  public int getRezervationID() { return rezervationID; }
+
+  public Hotel getHotel() { return hotel; }
+
+  public int getRoomNumber() { return roomNumber; }
+
+  public int getDay() { return day; }
 
   void calculatePayment() {
-    for (Room room: hotel.getRooms()) {
+    for (Room room : hotel.getRooms()) {
       if (room.getRoomNumber() == roomNumber) {
-        System.out.printf(
-          "%d gunluk  odeme tutari: %f\n", 
-          day, day * room.getPrice());
+        System.out.printf("%d gunluk  odeme tutari: %f\n", day,
+                          day * room.getPrice());
       }
     }
   }
-
 }

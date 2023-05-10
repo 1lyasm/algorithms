@@ -14,34 +14,20 @@ public class Room {
     isAvailable = true;
   }
 
-  public void setRoomNumber(int roomNumber) {
-    this.roomNumber = roomNumber;
-  }
+  public void setRoomNumber(int roomNumber) { this.roomNumber = roomNumber; }
 
   public String toString() {
-    return "Room [roomNumber=" + roomNumber + ", roomType=" + roomType + ", price=" + price + ", isAvailable="
-        + isAvailable + "]";
+    return "Room [roomNumber=" + roomNumber + ", roomType=" + roomType +
+        ", price=" + price + ", isAvailable=" + isAvailable + "]";
   }
 
-  public void setRoomType(String roomType) {
-    this.roomType = roomType;
-  }
-  public void setPrice(double price) {
-    this.price = price;
-  }
+  public void setRoomType(String roomType) { this.roomType = roomType; }
+  public void setPrice(double price) { this.price = price; }
   public void setAvailable(boolean isAvailable) {
     this.isAvailable = isAvailable;
   }
-  public int getRoomNumber() {
-    return roomNumber;
-  }
-  public String getRoomType() {
-    return roomType;
-  }
-  public double getPrice() {
-    return price;
-  }
-  public boolean isAvailable() {
-    return isAvailable;
-  }
+  public int getRoomNumber() { return roomNumber; }
+  public String getRoomType() { return roomType; }
+  public double getPrice() { return price; }
+  public boolean isAvailable() { return isAvailable; }
 }
