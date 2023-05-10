@@ -1,7 +1,5 @@
 class Test {
-  public static void main(String[] args) {
-    ;
-  }
+  public static void main(String[] args) { ; }
 }
 
 class TreeNode {
@@ -9,12 +7,9 @@ class TreeNode {
   TreeNode left;
   TreeNode right;
 
-  TreeNode() {
-  }
+  TreeNode() {}
 
-  TreeNode(int val) {
-    this.val = val;
-  }
+  TreeNode(int val) { this.val = val; }
 
   TreeNode(int val, TreeNode left, TreeNode right) {
     this.val = val;
@@ -36,7 +31,7 @@ class Solution {
   }
 
   public boolean isValidBST(TreeNode root) {
-    return isValidSubBST(root, (long) Integer.MIN_VALUE - 1L,
-        (long) Integer.MAX_VALUE + 1L);
+    return isValidSubBST(root, (long)Integer.MIN_VALUE - 1L,
+                         (long)Integer.MAX_VALUE + 1L);
   }
 }
