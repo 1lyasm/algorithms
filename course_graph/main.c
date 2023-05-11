@@ -25,7 +25,7 @@ int main() {
   scanf("%d", &n);
 
   // init matrix
-  mat = malloc(n * sizeof(int*));
+  mat = malloc(n * sizeof(int *));
   for (i = 0; i < n; ++i) {
     mat[i] = malloc(n * sizeof(int));
   }
@@ -46,15 +46,15 @@ int main() {
     printf("\n");
   }
 
-/*
+  /*
 
-  0 1 0 0 0 
-  0 0 0 1 0
-  0 0 0 0 1
-  0 0 0 0 1
-  0 0 0 0 0
+    0 1 0 0 0
+    0 0 0 1 0
+    0 0 0 0 1
+    0 0 0 0 1
+    0 0 0 0 0
 
-*/
+  */
 
   // compute node-parent count map
   parentCounts = malloc(n * sizeof(int));
@@ -104,7 +104,6 @@ int main() {
     printf("\n");
   }
 
-
   // delete adj list
   for (i = 0; i < graph.nodeCount; ++i) {
     struct LListNode *cur = graph.nodes[i].head, *next;
@@ -125,5 +124,5 @@ int main() {
   free(mat);
   mat = 0;
 
-  return  0;
+  return 0;
 }
