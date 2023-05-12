@@ -8,47 +8,6 @@
 #include <string.h>
 #include <time.h>
 
-void printArr(int *, int, int);
-void assertArrEq(int *, int *, int);
-void swap(int *, int, int);
-int numIslands(char **, int, int *);
-void numIslandsTest();
-int *partitionLabels(char *, int *);
-void partitionLabelsTest();
-int twoSumSortCmp(const void *, const void *);
-int twoSumSearchCmp(const void *, const void *);
-int *twoSum(int *, int, int, int *);
-void twoSumTest();
-struct llist_node;
-struct llist_node *addTwoNums(struct llist_node *, struct llist_node *);
-void addTwoNumsTest();
-void mergeSort(int *, int, int);
-void mergeSortTest();
-void merge(int *, int, int);
-void quickSortTest();
-void quickSort(int *, int, int);
-struct Arr;
-struct Arr *genArmstrong(int);
-void genArmstrongTest();
-int genNarcCmp(const void *, const void *);
-int genNarcCmpRev(const void *, const void *);
-int64_t *genNarc(int64_t);
-void genNarcTest();
-void ToHTest();
-struct Sticks;
-void ToH(struct Sticks *, int, int, int, int);
-void putCircle(struct Sticks *, int, int);
-void binarySearchTest();
-int binarySearch(int *, int, int, int);
-int binarySearchIter(int *, int, int);
-
-int main() {
-  printf("\n");
-  binarySearchTest();
-  printf("\n");
-  return 0;
-}
-
 void printArr(int *Arr, int S, int E) {
   for (int I = S; I <= E; printf("%d ", Arr[I]), ++I)
     ;
@@ -709,4 +668,12 @@ int binarySearchIter(int *Arr, int N, int Target) {
     }
   }
   return -1;
+}
+
+
+int main() {
+  printf("\n");
+  binarySearchTest();
+  printf("\n");
+  return 0;
 }
