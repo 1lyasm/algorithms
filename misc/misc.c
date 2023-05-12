@@ -143,12 +143,10 @@ int *twoSum(int *nums, int Size, int target, int *returnSize) {
     if (!search_Res) continue;
     indices = malloc(2 * sizeof(int));
     int val_0 = reduced_arr[i], val_1 = *(int *)search_Res;
-    for (int i = Size - 1; i >= 0; i--) {
+    for (int i = Size - 1; i >= 0; i--)
       if (nums[i] == val_0) indices[0] = i;
-    }
-    for (int i = 0; i < Size; i++) {
+    for (int i = 0; i < Size; i++)
       if (nums[i] == val_1) indices[1] = i;
-    }
     *returnSize = 2;
     break;
   }
@@ -480,9 +478,8 @@ int64_t *genNarc(int64_t N) {
         int J = 1;
         for (; J < NumLen && Num[J] == 9; ++J)
           ;
-        if (J == NumLen) {
+        if (J == NumLen)
           break;
-        }
         for (int K = J - 1, Val = ++Num[J]; K >= 0; Num[K] = Val, --K)
           ;
       }
@@ -553,9 +550,8 @@ void ToHTest() {
     Towers->StickMatrix[I] = malloc(N * sizeof(int));
     memset((void *)Towers->StickMatrix[I], -1, N * sizeof(int));
   }
-  for (int J = 0; J < N; ++J) {
+  for (int J = 0; J < N; ++J)
     Towers->StickMatrix[0][J] = N - J;
-  }
   Towers->Tops[0] = N;
   Towers->Tops[1] = 0;
   Towers->Tops[2] = 0;
@@ -563,17 +559,15 @@ void ToHTest() {
   int *Expected2 = malloc(N * sizeof(int));
   int *Expected3 = malloc(N * sizeof(int));
   memset(Expected1, -1, N * sizeof(int));
-  for (int J = 0; J < N; ++J) {
+  for (int J = 0; J < N; ++J)
     Expected2[J] = N - J;
-  }
   memset(Expected3, -1, N * sizeof(int));
   ToH(Towers, 0, 1, N, N);
   assertArrEq(Towers->StickMatrix[0], Expected1, N);
   assertArrEq(Towers->StickMatrix[1], Expected2, N);
   assertArrEq(Towers->StickMatrix[2], Expected3, N);
-  for (int I = 0; I < 3; ++I) {
+  for (int I = 0; I < 3; ++I)
     free(Towers->StickMatrix[I]);
-  }
   free(Towers->StickMatrix);
   free(Towers);
   printf("PASSED\n");
@@ -586,12 +580,10 @@ void ToH(struct Sticks *Towers, int Source, int Destination, int Count, int N) {
   assert(Destination >= 0);
   assert(Source != Destination);
   int OtherDestination = 0;
-  if (OtherDestination == Source || OtherDestination == Destination) {
+  if (OtherDestination == Source || OtherDestination == Destination)
     OtherDestination++;
-  }
-  if (OtherDestination == Source || OtherDestination == Destination) {
+  if (OtherDestination == Source || OtherDestination == Destination)
     OtherDestination++;
-  }
   if (Count == 2) {
     if (abs(Destination - Source) == 1) {
       putCircle(Towers, Source, OtherDestination);
@@ -630,7 +622,6 @@ void binarySearchTest() {
   assert(binarySearch(Arr, 0, N - 1, 4) == -1);
   assert(binarySearch(Arr, 0, N - 1, 5) == 4);
   assert(binarySearch(Arr, 0, N - 1, 6) == -1);
-
   assert(binarySearchIter(Arr, N, 1) == -1);
   assert(binarySearchIter(Arr, N, 2) == 0);
   assert(binarySearchIter(Arr, N, 3) == 2);
@@ -641,17 +632,15 @@ void binarySearchTest() {
 }
 
 int binarySearch(int *Arr, int Start, int End, int Target) {
-  if (Start > End) {
+  if (Start > End)
     return -1;
-  }
   int Middle = (Start + End) / 2;
-  if (Arr[Middle] == Target) {
+  if (Arr[Middle] == Target)
     return Middle;
-  } else if (Arr[Middle] < Target) {
+  else if (Arr[Middle] < Target)
     return binarySearch(Arr, Middle + 1, End, Target);
-  } else {
+  else
     return binarySearch(Arr, 0, Middle - 1, Target);
-  }
 }
 
 int binarySearchIter(int *Arr, int N, int Target) {
@@ -659,13 +648,12 @@ int binarySearchIter(int *Arr, int N, int Target) {
   int End = N - 1;
   for (; Start <= End;) {
     int Middle = (Start + End) / 2;
-    if (Arr[Middle] == Target) {
+    if (Arr[Middle] == Target)
       return Middle;
-    } else if (Arr[Middle] < Target) {
+    else if (Arr[Middle] < Target)
       Start = Middle + 1;
-    } else {
+    else
       End = Middle - 1;
-    }
   }
   return -1;
 }
