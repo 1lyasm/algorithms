@@ -29,7 +29,7 @@ int main() {
 
   // init matrix
   printf("matrix: \n\n");
-  mat = malloc(n * sizeof(int*));
+  mat = malloc(n * sizeof(int *));
   for (i = 0; i < n; ++i) {
     mat[i] = malloc(n * sizeof(int));
     for (j = 0; j < n; ++j) {
@@ -61,7 +61,7 @@ int main() {
     graph.adjList[i][0].isVisited = 0;
   }
 
-  // fill adj list
+
   for (i = 0; i < n; ++i) {
     int top = 1;
     for (j = 0; j < n; ++j) {
@@ -118,5 +118,5 @@ int main() {
   free(graph.parentCounts);
   free(mat);
 
-  return  0;
+  return 0;
 }
