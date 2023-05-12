@@ -1,28 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct GNode {
-  int id;
-  int isVisited;
-};
-
 int main() {
+  struct GNode {
+    int id;
+    int isVisited;
+  };
   int n;
   printf("n: ");
   scanf("%d", &n);
-
   int **mat = malloc(n * sizeof(int *));
   int *parentCounts = calloc(n, sizeof(int));
   int *childCounts = calloc(n, sizeof(int));
   struct GNode **adjList = malloc(n * sizeof(struct GNode *));
-
   printf("matrix:\n\n");
   for (int i = 0; i < n; ++i) {
     mat[i] = malloc(n * sizeof(int));
-    for (int j = 0; j < n; ++j)
-      scanf("%d", &mat[i][j]);
+    for (int j = 0; j < n; ++j) scanf("%d", &mat[i][j]);
   }
-
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < n; ++j) {
       parentCounts[i] += (mat[j][i] > 0);
@@ -32,7 +27,6 @@ int main() {
     adjList[i][0].id = i + 1;
     adjList[i][0].isVisited = 0;
   }
-
   for (int i = 0; i < n; ++i) {
     for (int j = 0, top = 1; j < n; ++j) {
       if (mat[i][j] > 0) {
@@ -41,11 +35,8 @@ int main() {
       }
     }
   }
-
-  for (int termCounter = 1, courseLeft = 1; ; ++termCounter) {
-    int hasPrintedTermNum = 0;
-    courseLeft = 0;
-
+  for (int termCounter = 1;; ++termCounter) {
+    int hasPrintedTermNum = 0, courseLeft = 0;
     for (int i = 0; i < n; ++i) {
       if (parentCounts[i] == 0 && adjList[i][0].isVisited == 0) {
         if (hasPrintedTermNum == 0) {
@@ -59,24 +50,17 @@ int main() {
           parentCounts[adjList[i][j].id - 1] -= n;
       }
     }
-
     for (int i = 0; i < n; ++i) {
-      if (parentCounts[i] < 0)
-        parentCounts[i] += n - 1;
+      if (parentCounts[i] < 0) parentCounts[i] += n - 1;
     }
-
-    if (courseLeft == 0) {
-      break;
-    }
+    if (courseLeft == 0) break;
   }
-
   for (int i = 0; i < n; ++i) {
     if (adjList[i][0].isVisited == 0) {
       printf("\nAdditional courses left, unable to graduate\n");
       break;
     }
   }
-
   for (int i = 0; i < n; ++i) {
     free(adjList[i]);
     free(mat[i]);
@@ -85,6 +69,5 @@ int main() {
   free(childCounts);
   free(parentCounts);
   free(mat);
-
   return 0;
 }
