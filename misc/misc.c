@@ -670,7 +670,6 @@ int binarySearchIter(int *Arr, int N, int Target) {
   return -1;
 }
 
-
 int main() {
   printf("\n");
   binarySearchTest();
