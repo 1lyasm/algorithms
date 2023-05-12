@@ -319,8 +319,7 @@ std::vector<double> PageRank::pageRank(std::vector<std::vector<double>> Graph,
 
 double PageRank::sumVector(std::vector<double> Vector) {
   double Sum = 0.0;
-  for (const auto &Value : Vector)
-    Sum += Value;
+  for (const auto &Value : Vector) Sum += Value;
   return Sum;
 }
 
@@ -347,8 +346,7 @@ inline double PageRank::updatePageRankValue(
   double UpdateValue = DampingTerm;
   double PageRankSum = 0;
   for (int OtherNodeIndex = 0; OtherNodeIndex < NodeCount; ++OtherNodeIndex) {
-    if (OtherNodeIndex == NodeIndex)
-      continue;
+    if (OtherNodeIndex == NodeIndex) continue;
     if (std::ceil(Graph[NodeIndex][OtherNodeIndex]) == 1) {
       PageRankSum +=
           OldValues[OtherNodeIndex] / OutgoingWeights[OtherNodeIndex];
@@ -371,8 +369,7 @@ void PageRank::assertClose(double Value1, double Value2) {
 
 template <typename T>
 void PageRank::printVector(std::vector<T> Vector) {
-  for (const auto &Value : Vector)
-    std::cout << Value << " ";
+  for (const auto &Value : Vector) std::cout << Value << " ";
   std::cout << "\n";
 }
 
@@ -397,11 +394,9 @@ void PageRank::test() {
 }
 
 std::string ZigzagConversion::zigzag_conv(std::string s, int row_count) {
-  if (s.size() < 2 || row_count == 1)
-    return s;
+  if (s.size() < 2 || row_count == 1) return s;
   std::string result;
-  for (int i = 0; i < s.size(); i += 2 * row_count - 2)
-    result.push_back(s[i]);
+  for (int i = 0; i < s.size(); i += 2 * row_count - 2) result.push_back(s[i]);
   for (int i = 1; i < row_count - 1; ++i) {
     bool mode = false;
     for (int j = i; j < s.size();) {
@@ -429,11 +424,9 @@ void ZigzagConversion::test() {
 }
 
 int ReverseInteger::reverse(int x) {
-  if (x <= 9 && x >= -9)
-    return x;
+  if (x <= 9 && x >= -9) return x;
   bool is_negative = false;
-  if (x < 0)
-    is_negative = true;
+  if (x < 0) is_negative = true;
   x = std::abs(x);
   std::string x_str;
   int val = x;
@@ -462,8 +455,7 @@ int ReverseInteger::string_to_int(std::string s) {
   int val = 0;
   int multiplier = 1;
   for (int i = s.size() - 1; i >= 0; --i) {
-    if ((2147483648 - val) / (double)multiplier <= (s[i] - 48))
-      return -1;
+    if ((2147483648 - val) / (double)multiplier <= (s[i] - 48)) return -1;
     val += (s[i] - 48) * multiplier;
     if (2147483648 / 10.0 > multiplier) multiplier *= 10;
   }
