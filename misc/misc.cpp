@@ -442,13 +442,9 @@ int ReverseInteger::reverse(int x) {
     x_str_stripped.push_back(x_str[i]);
   x_str = x_str_stripped;
   int as_int = string_to_int(x_str);
-  if (as_int == -1)
-    return 0;
-  else if (is_negative)
-    return as_int * -1;
-  else {
-    return as_int;
-  }
+  if (as_int == -1) return 0;
+  else if (is_negative) return as_int * -1;
+  else return as_int;
 }
 
 int ReverseInteger::string_to_int(std::string s) {
