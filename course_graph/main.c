@@ -6,22 +6,18 @@ struct GNode {
   int isVisited;
 };
 
-struct Graph {
-  struct GNode **adjList;
-  int *parentCounts;
-  int *childCounts;
-};
-
 int main() {
   // variables
   int n;
   int **mat = 0;
   int i;
   int j;
-  struct Graph graph;
   int termCounter = 1;
   int courseLeft = 1;
   int isCyclic = 0;
+  struct GNode **adjList;
+  int *parentCounts;
+  int *childCounts;
 
   // take n
   printf("n: ");
@@ -39,35 +35,35 @@ int main() {
   printf("\n");
 
   // init graph
-  graph.childCounts = calloc(n, sizeof(int));
-  graph.parentCounts = calloc(n, sizeof(int));
-  graph.adjList = malloc(n * sizeof(struct GNode *));
+  childCounts = calloc(n, sizeof(int));
+  parentCounts = calloc(n, sizeof(int));
+  adjList = malloc(n * sizeof(struct GNode *));
   for (i = 0; i < n; ++i) {
     // fill parenCounts and childCounts
     for (j = 0; j < n; ++j) {
       if (mat[j][i] > 0) {
-        ++graph.parentCounts[i];
+        ++parentCounts[i];
       }
       if (mat[i][j] > 0) {
-        ++graph.childCounts[i];
+        ++childCounts[i];
       }
     }
 
     // allocate just enough space for a list
-    graph.adjList[i] =
-        malloc((graph.childCounts[i] + 1) * sizeof(struct GNode));
+    adjList[i] =
+        malloc((childCounts[i] + 1) * sizeof(struct GNode));
 
     // put node itself as first element of each list
-    graph.adjList[i][0].id = i + 1;
-    graph.adjList[i][0].isVisited = 0;
+    adjList[i][0].id = i + 1;
+    adjList[i][0].isVisited = 0;
   }
 
   for (i = 0; i < n; ++i) {
     int top = 1;
     for (j = 0; j < n; ++j) {
       if (mat[i][j] > 0) {
-        graph.adjList[i][top].id = j + 1;
-        graph.adjList[i][top].isVisited = 0;
+        adjList[i][top].id = j + 1;
+        adjList[i][top].isVisited = 0;
         top++;
       }
     }
@@ -78,22 +74,22 @@ int main() {
     int hasPrintedTermNum = 0;
     courseLeft = 0;
     for (i = 0; i < n; ++i) {
-      if (graph.parentCounts[i] == 0 && graph.adjList[i][0].isVisited == 0) {
+      if (parentCounts[i] == 0 && adjList[i][0].isVisited == 0) {
         if (hasPrintedTermNum == 0) {
           printf("term %d: ", termCounter);
           hasPrintedTermNum = 1;
         }
         printf("course %d ", i + 1);
-        graph.adjList[i][0].isVisited = 1;
+        adjList[i][0].isVisited = 1;
         courseLeft = 1;
-        for (j = 1; j < graph.childCounts[i] + 1; ++j) {
-          graph.parentCounts[graph.adjList[i][j].id - 1] -= n;
+        for (j = 1; j < childCounts[i] + 1; ++j) {
+          parentCounts[adjList[i][j].id - 1] -= n;
         }
       }
     }
     for (i = 0; i < n; ++i) {
-      if (graph.parentCounts[i] < 0) {
-        graph.parentCounts[i] += n - 1;
+      if (parentCounts[i] < 0) {
+        parentCounts[i] += n - 1;
       }
     }
     printf("\n");
@@ -102,7 +98,7 @@ int main() {
 
   // check that every node is visited
   for (i = 0; i < n && isCyclic == 0; ++i) {
-    if (graph.adjList[i][0].isVisited == 0) {
+    if (adjList[i][0].isVisited == 0) {
       printf("Additional courses left, unable to graduate\n");
       isCyclic = 1;
     }
@@ -110,12 +106,12 @@ int main() {
 
   // free everything
   for (i = 0; i < n; ++i) {
-    free(graph.adjList[i]);
+    free(adjList[i]);
     free(mat[i]);
   }
-  free(graph.adjList);
-  free(graph.childCounts);
-  free(graph.parentCounts);
+  free(adjList);
+  free(childCounts);
+  free(parentCounts);
   free(mat);
 
   return 0;
