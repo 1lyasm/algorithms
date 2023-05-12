@@ -1,3 +1,3 @@
-clang -O2 -fsanitize=address main.c -o a.exe
-a
-del *.exe *.pdb *.lib *.exp
+clang -g -O0 -Wall -fsanitize=address main.c -o a.bin
+a.bin
+del a.bin
