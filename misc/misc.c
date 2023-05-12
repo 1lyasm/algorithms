@@ -478,8 +478,7 @@ int64_t *genNarc(int64_t N) {
         int J = 1;
         for (; J < NumLen && Num[J] == 9; ++J)
           ;
-        if (J == NumLen)
-          break;
+        if (J == NumLen) break;
         for (int K = J - 1, Val = ++Num[J]; K >= 0; Num[K] = Val, --K)
           ;
       }
@@ -550,8 +549,7 @@ void ToHTest() {
     Towers->StickMatrix[I] = malloc(N * sizeof(int));
     memset((void *)Towers->StickMatrix[I], -1, N * sizeof(int));
   }
-  for (int J = 0; J < N; ++J)
-    Towers->StickMatrix[0][J] = N - J;
+  for (int J = 0; J < N; ++J) Towers->StickMatrix[0][J] = N - J;
   Towers->Tops[0] = N;
   Towers->Tops[1] = 0;
   Towers->Tops[2] = 0;
@@ -559,15 +557,13 @@ void ToHTest() {
   int *Expected2 = malloc(N * sizeof(int));
   int *Expected3 = malloc(N * sizeof(int));
   memset(Expected1, -1, N * sizeof(int));
-  for (int J = 0; J < N; ++J)
-    Expected2[J] = N - J;
+  for (int J = 0; J < N; ++J) Expected2[J] = N - J;
   memset(Expected3, -1, N * sizeof(int));
   ToH(Towers, 0, 1, N, N);
   assertArrEq(Towers->StickMatrix[0], Expected1, N);
   assertArrEq(Towers->StickMatrix[1], Expected2, N);
   assertArrEq(Towers->StickMatrix[2], Expected3, N);
-  for (int I = 0; I < 3; ++I)
-    free(Towers->StickMatrix[I]);
+  for (int I = 0; I < 3; ++I) free(Towers->StickMatrix[I]);
   free(Towers->StickMatrix);
   free(Towers);
   printf("PASSED\n");
@@ -632,8 +628,7 @@ void binarySearchTest() {
 }
 
 int binarySearch(int *Arr, int Start, int End, int Target) {
-  if (Start > End)
-    return -1;
+  if (Start > End) return -1;
   int Middle = (Start + End) / 2;
   if (Arr[Middle] == Target)
     return Middle;
