@@ -38,9 +38,8 @@ void Regex::test() {
     std::regex Regex("(a*(bb)*a*)*");
     std::smatch Match;
     std::vector<std::string> MatchingStrings = {"abba", "bbbbabbaaa", "a", ""};
-    for (const auto &MatchingString : MatchingStrings) {
+    for (const auto &MatchingString : MatchingStrings)
       assert(std::regex_match(MatchingString, Match, Regex) == 1);
-    }
     std::vector<std::string> NonMatchingStrings = {"aba", "b", "ababa",
                                                    "abbab"};
     for (const auto &NonMatchingString : NonMatchingStrings)
@@ -58,9 +57,8 @@ void Regex::test() {
       assert(std::regex_match(MatchingString, Match, Regex) == 1);
     std::vector<std::string> NonMatchingStrings = {"aba", "b", "ababa",
                                                    "abbab"};
-    for (const auto &NonMatchingString : NonMatchingStrings) {
+    for (const auto &NonMatchingString : NonMatchingStrings)
       assert(std::regex_match(NonMatchingString, Match, Regex) == 0);
-    }
   }
   {
     std::regex Regex(
@@ -71,16 +69,14 @@ void Regex::test() {
         "0X00000", "0X00000a", "0000123", "000000", "10",       "0",
         "2",       "22",       "01",      "15",     "9L",       "9ll",
         "9LL",     "9l",       "0x0001u", "0XBBBU"};
-    for (const auto &MatchingString : MatchingStrings) {
+    for (const auto &MatchingString : MatchingStrings)
       assert(std::regex_match(MatchingString, Match, Regex) == 1);
-    }
     std::cout << "\n";
     std::vector<std::string> NonMatchingStrings = {
         "0X",    "0x",       "000001238", "09",    "0xz",    "x",
         "x1234", "0x1234g1", "9lll",      "0xauu", "0XAAAUU"};
-    for (const auto &NonMatchingString : NonMatchingStrings) {
+    for (const auto &NonMatchingString : NonMatchingStrings)
       assert(std::regex_match(NonMatchingString, Match, Regex) == 0);
-    }
   }
   {
     std::regex Regex("/(\\*)((\\*(?!/))|([^\\*]))*(\\*)/");
