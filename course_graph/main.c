@@ -41,7 +41,7 @@ int main() {
   // init graph
   graph.childCounts = calloc(n, sizeof(int));
   graph.parentCounts = calloc(n, sizeof(int));
-  graph.adjList = malloc(n * sizeof(struct GNode*));
+  graph.adjList = malloc(n * sizeof(struct GNode *));
   for (i = 0; i < n; ++i) {
     // fill parenCounts and childCounts
     for (j = 0; j < n; ++j) {
@@ -54,13 +54,13 @@ int main() {
     }
 
     // allocate just enough space for a list
-    graph.adjList[i] = malloc((graph.childCounts[i] + 1) * sizeof(struct GNode));
+    graph.adjList[i] =
+        malloc((graph.childCounts[i] + 1) * sizeof(struct GNode));
 
     // put node itself as first element of each list
     graph.adjList[i][0].id = i + 1;
     graph.adjList[i][0].isVisited = 0;
   }
-
 
   for (i = 0; i < n; ++i) {
     int top = 1;
@@ -88,7 +88,7 @@ int main() {
         courseLeft = 1;
         for (j = 1; j < graph.childCounts[i] + 1; ++j) {
           graph.parentCounts[graph.adjList[i][j].id - 1] -= n;
-        } 
+        }
       }
     }
     for (i = 0; i < n; ++i) {
