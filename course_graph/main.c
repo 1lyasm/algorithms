@@ -16,7 +16,8 @@ int main() {
   printf("matrix:\n\n");
   for (int i = 0; i < n; ++i) {
     mat[i] = malloc(n * sizeof(int));
-    for (int j = 0; j < n; ++j) scanf("%d", &mat[i][j]);
+    for (int j = 0; j < n; ++j)
+      scanf("%d", &mat[i][j]);
   }
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < n; ++j) {
@@ -51,9 +52,11 @@ int main() {
       }
     }
     for (int i = 0; i < n; ++i) {
-      if (parentCounts[i] < 0) parentCounts[i] += n - 1;
+      if (parentCounts[i] < 0)
+        parentCounts[i] += n - 1;
     }
-    if (courseLeft == 0) break;
+    if (courseLeft == 0)
+      break;
   }
   for (int i = 0; i < n; ++i) {
     if (adjList[i][0].isVisited == 0) {
