@@ -1,9 +1,10 @@
 #include "binary_tree_inorder.h"
+
 #include <vector>
 using namespace std;
 
 class Solution {
-public:
+ public:
   vector<int> inorderTraversal(TreeNode *root) {
     if (!root) {
       return vector<int>();

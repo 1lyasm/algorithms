@@ -1,8 +1,9 @@
-#include "q5_6.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "q5_6.h"
 
 void test_add_in_base();
 

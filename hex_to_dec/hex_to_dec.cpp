@@ -75,8 +75,7 @@ void test_convert_to_decimal() {
 int get_operand(char at_hand) {
   const char HEX_LETTERS[6] = {'a', 'b', 'c', 'd', 'e', 'f'};
   for (int i = 10; i < 16; i++) {
-    if (HEX_LETTERS[i - 10] == at_hand)
-      return i;
+    if (HEX_LETTERS[i - 10] == at_hand) return i;
   }
   return 0;
 }

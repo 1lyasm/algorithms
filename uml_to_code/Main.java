@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
-
   public static void main(String[] args) {
-
     Hotel h1 = new Hotel("London Hotel", "London, UK", "0044201491866");
     Hotel h2 = new Hotel("Istanbul Hotel", "Istanbul, Turkey", "009212432121");
 

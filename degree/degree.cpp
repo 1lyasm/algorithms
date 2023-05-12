@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
-std::unordered_map<int, int>
-comp_degs(std::vector<std::pair<int, int>> vrtx_pairs) {
+std::unordered_map<int, int> comp_degs(
+    std::vector<std::pair<int, int>> vrtx_pairs) {
   std::unordered_map<int, int> vrtx_deg_map;
   int vrtx_1, vrtx_2;
   for (long long unsigned int i = 0; i < vrtx_pairs.size(); i++) {
@@ -19,8 +19,8 @@ comp_degs(std::vector<std::pair<int, int>> vrtx_pairs) {
   return vrtx_deg_map;
 }
 
-std::unordered_map<int, std::pair<int, int>>
-comp_in_out_degs(std::vector<std::pair<int, int>> vrtx_pairs) {
+std::unordered_map<int, std::pair<int, int>> comp_in_out_degs(
+    std::vector<std::pair<int, int>> vrtx_pairs) {
   std::unordered_map<int, std::pair<int, int>> vrtx_deg_map;
   int vrtx_1, vrtx_2;
   for (long long unsigned int i = 0; i < vrtx_pairs.size(); i++) {
@@ -49,21 +49,21 @@ int main() {
     std::cout << "\nVertex label: " << vrtx_deg.first
               << "\nVertex degree: " << deg << "\n";
     switch (vrtx_deg.first) {
-    case 1:
-      assert(deg == 2);
-      break;
-    case 2:
-      assert(deg == 3);
-      break;
-    case 3:
-      assert(deg == 3);
-      break;
-    case 4:
-      assert(deg == 3);
-      break;
-    case 5:
-      assert(deg == 1);
-      break;
+      case 1:
+        assert(deg == 2);
+        break;
+      case 2:
+        assert(deg == 3);
+        break;
+      case 3:
+        assert(deg == 3);
+        break;
+      case 4:
+        assert(deg == 3);
+        break;
+      case 5:
+        assert(deg == 1);
+        break;
     }
   }
 
@@ -80,26 +80,26 @@ int main() {
               << "\nVertex out degree: " << out_deg
               << "\nVertex in degree: " << in_deg << "\n";
     switch (vrtx_deg.first) {
-    case 1:
-      assert(out_deg == 2);
-      assert(in_deg == 0);
-      break;
-    case 2:
-      assert(out_deg == 2);
-      assert(in_deg == 1);
-      break;
-    case 3:
-      assert(out_deg == 1);
-      assert(in_deg == 2);
-      break;
-    case 4:
-      assert(out_deg == 1);
-      assert(in_deg == 2);
-      break;
-    case 5:
-      assert(out_deg == 0);
-      assert(in_deg == 1);
-      break;
+      case 1:
+        assert(out_deg == 2);
+        assert(in_deg == 0);
+        break;
+      case 2:
+        assert(out_deg == 2);
+        assert(in_deg == 1);
+        break;
+      case 3:
+        assert(out_deg == 1);
+        assert(in_deg == 2);
+        break;
+      case 4:
+        assert(out_deg == 1);
+        assert(in_deg == 2);
+        break;
+      case 5:
+        assert(out_deg == 0);
+        assert(in_deg == 1);
+        break;
     }
   }
 

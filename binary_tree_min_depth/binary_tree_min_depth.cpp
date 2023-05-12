@@ -4,7 +4,7 @@
 #include <iostream>
 
 class Solution {
-public:
+ public:
   static int minSubDepth(TreeNode *root) {
     if (!root) {
       return 10001;

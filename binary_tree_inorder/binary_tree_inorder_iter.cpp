@@ -1,11 +1,12 @@
-#include "binary_tree_inorder.h"
 #include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <vector>
 
+#include "binary_tree_inorder.h"
+
 class Solution {
-public:
+ public:
   std::vector<int> inorderTraversal(TreeNode *root) {
     std::vector<int> traversal;
     std::vector<TreeNode *> stack;

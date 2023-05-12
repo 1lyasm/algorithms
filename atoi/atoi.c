@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 void ignore_ws(char *s, int *pos) {
-  while (s[*pos] == ' ')
-    ++*pos;
+  while (s[*pos] == ' ') ++*pos;
 }
 
 int myAtoi(char *s) {

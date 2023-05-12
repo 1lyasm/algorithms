@@ -1,7 +1,8 @@
-#include "preorder_inorder.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "preorder_inorder.h"
 
 #define INVALID_VAL 3001
 

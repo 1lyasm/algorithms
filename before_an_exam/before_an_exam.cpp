@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <cassert>
 #include <regex>
 
@@ -6,13 +7,13 @@ std::vector<std::string> sep_str(std::string s);
 std::vector<int> vec_stoi(std::vector<std::string> vec);
 int sum_vec(std::vector<int> v);
 
-template <typename T> void print_vec(T val);
+template <typename T>
+void print_vec(T val);
 
 std::vector<int> comp_hours(int d, int S, std::vector<int> m,
                             std::vector<int> M);
 
 int main() {
-
   std::string line1;
   std::getline(std::cin, line1);
 
@@ -66,7 +67,8 @@ std::vector<int> vec_stoi(std::vector<std::string> vec) {
   return vec_int;
 }
 
-template <typename T> void print_vec(T val) {
+template <typename T>
+void print_vec(T val) {
   for (int i = 0; i <= val.size() - 1; i++) {
     std::cout << val[i];
     if (i != val.size() - 1) {

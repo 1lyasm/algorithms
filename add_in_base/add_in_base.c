@@ -1,8 +1,9 @@
-#include "../../include/character.h"
-#include "q5_6.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../../include/character.h"
+#include "q5_6.h"
 
 char *add_in_base(char *t1, char *t2, int base) {
   int len_t1 = strlen(t1), len_t2 = strlen(t2);

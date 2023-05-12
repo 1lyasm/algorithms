@@ -5,8 +5,7 @@
 #include <time.h>
 
 int verify_n(int n) {
-  if (n < 2)
-    return -1;
+  if (n < 2) return -1;
   return 0;
 }
 
@@ -22,16 +21,14 @@ void inp_n(int *n) {
 void fill_mat(int **mat, int n) {
   int i, j;
   for (i = 0; i < n; i++) {
-    for (j = 0; j < n; j++)
-      mat[i][j] = rand() % (n * n) + 1;
+    for (j = 0; j < n; j++) mat[i][j] = rand() % (n * n) + 1;
   }
 }
 
 void print_mat(int **mat, int n) {
   int i, j;
   for (i = 0; i < n; i++) {
-    for (j = 0; j < n; j++)
-      printf("%d ", mat[i][j]);
+    for (j = 0; j < n; j++) printf("%d ", mat[i][j]);
     printf("\n\n");
   }
 }
@@ -39,14 +36,12 @@ void print_mat(int **mat, int n) {
 void alloc_mat(int ***mat, int n) {
   int i;
   *mat = malloc(n * sizeof(int *));
-  for (i = 0; i < n; i++)
-    (*mat)[i] = malloc(n * sizeof(int));
+  for (i = 0; i < n; i++) (*mat)[i] = malloc(n * sizeof(int));
 }
 
 void free_mat(int ***mat, int n) {
   int i;
-  for (i = 0; i < n; i++)
-    free((*mat)[i]);
+  for (i = 0; i < n; i++) free((*mat)[i]);
   free(*mat);
   *mat = 0;
 }
@@ -54,8 +49,7 @@ void free_mat(int ***mat, int n) {
 void copy_mat(int **dest, int **src, int n) {
   int i, j;
   for (i = 0; i < n; i++) {
-    for (j = 0; j < n; j++)
-      dest[i][j] = src[i][j];
+    for (j = 0; j < n; j++) dest[i][j] = src[i][j];
   }
 }
 
@@ -65,8 +59,7 @@ void rotate(int **mat, int n) {
   copy_mat(mat_copy, mat, n);
   int i, j;
   for (i = 0; i < n; i++) {
-    for (j = 0; j < n; j++)
-      mat[i][j] = mat_copy[n - j - 1][i];
+    for (j = 0; j < n; j++) mat[i][j] = mat_copy[n - j - 1][i];
   }
   free_mat(&mat_copy, n);
 }
@@ -75,8 +68,7 @@ void update_score(int *puan, int **mat, int n) {
   int row = n - 1;
   int col;
   int sum = 0;
-  for (col = 0; col < n; ++col)
-    sum += mat[row][col];
+  for (col = 0; col < n; ++col) sum += mat[row][col];
   *puan += sum;
 }
 

@@ -9,14 +9,12 @@ int do_conversion(long *val_1, long *val_2, char *buf) {
   char *end_ptr;
   *val_1 = strtol(buf, &end_ptr, 10);
   *val_2 = strtol(end_ptr, &end_ptr, 10);
-  if (*val_1 == 0 || *val_2 == 0 || errno == ERANGE)
-    return -1;
+  if (*val_1 == 0 || *val_2 == 0 || errno == ERANGE) return -1;
   return 0;
 }
 
 int validate_input(long n, long m) {
-  if ((double)n < 1.5 * m - 0.5 || n <= 2 || m <= 2)
-    return -1;
+  if ((double)n < 1.5 * m - 0.5 || n <= 2 || m <= 2) return -1;
   return 0;
 }
 
@@ -66,8 +64,7 @@ void push_first_node(struct LList *list, int val) {
 }
 
 void push_back(struct LList *list, int val) {
-  if (list->head == 0)
-    return push_first_node(list, val);
+  if (list->head == 0) return push_first_node(list, val);
   list->tail->next = malloc(sizeof(struct LListNode));
   list->tail = list->tail->next;
   list->tail->val = val;
@@ -79,8 +76,7 @@ int find_idx(struct LList *list, int val) {
   struct LListNode *it = list->head;
   int idx = 0;
   do {
-    if (it->val == val)
-      return idx;
+    if (it->val == val) return idx;
     ++idx;
     it = it->next;
   } while (it != list->head);
@@ -90,8 +86,7 @@ int find_idx(struct LList *list, int val) {
 struct LListNode *find(struct LList *list, int val) {
   struct LListNode *it = list->head;
   do {
-    if (it->val == val)
-      return it;
+    if (it->val == val) return it;
     it = it->next;
   } while (it != list->head);
   return 0;
@@ -126,16 +121,12 @@ void push_front(struct LList *list, int val) {
 
 void insert_at_idx(struct LList *list, int idx, int val) {
   struct LListNode *it = list->head;
-  if (idx == 0)
-    return push_front(list, val);
-  if (idx == 1)
-    return insert_at_iter(list, it, val);
+  if (idx == 0) return push_front(list, val);
+  if (idx == 1) return insert_at_iter(list, it, val);
   it = it->next;
   int i;
-  for (i = 1; it != list->head && i < idx - 1; ++i)
-    it = it->next;
-  if (it == list->head)
-    return push_back(list, val);
+  for (i = 1; it != list->head && i < idx - 1; ++i) it = it->next;
+  if (it == list->head) return push_back(list, val);
   return insert_at_iter(list, it, val);
 }
 
@@ -147,8 +138,7 @@ struct UniqueRandGen {
 int find_entry(struct UniqueRandGen *gen, int entry) {
   int i;
   for (i = 0; i < gen->pool_size; ++i) {
-    if (gen->pool[i] == entry)
-      return i;
+    if (gen->pool[i] == entry) return i;
   }
   return -1;
 }
@@ -160,8 +150,7 @@ void del_entry(struct UniqueRandGen *gen, int entry_idx) {
 
 void init_entries(struct UniqueRandGen *gen) {
   int i;
-  for (i = 0; i < gen->pool_size; ++i)
-    gen->pool[i] = i + 1;
+  for (i = 0; i < gen->pool_size; ++i) gen->pool[i] = i + 1;
 }
 
 void init_gen(struct UniqueRandGen *gen, int size) {
@@ -184,14 +173,12 @@ int generate(struct UniqueRandGen *gen) {
 
 void del_gens(struct UniqueRandGen *gens, int n_lists) {
   int i;
-  for (i = 0; i < n_lists; ++i)
-    del_gen(&gens[i]);
+  for (i = 0; i < n_lists; ++i) del_gen(&gens[i]);
 }
 
 void init_gens(struct UniqueRandGen *gens, int n_lists, int max_val) {
   int i;
-  for (i = 0; i < n_lists; ++i)
-    init_gen(&gens[i], max_val);
+  for (i = 0; i < n_lists; ++i) init_gen(&gens[i], max_val);
 }
 
 void del_entry_from_all(struct UniqueRandGen *gens, int n_lists, int common) {
@@ -215,8 +202,7 @@ void remove_vertical_dup(struct LList *lists, struct LListNode **iters,
   int i;
   for (i = 0; i < n_lists; ++i) {
     int rand_val, is_duplicate;
-    if (gens[i].pool_size == 0)
-      continue;
+    if (gens[i].pool_size == 0) continue;
     do {
       rand_val = generate(&gens[i]);
       is_duplicate = find(&lists[(i + 1) % n_lists], rand_val) != 0 &&
@@ -282,8 +268,7 @@ void make_and_print(struct LList *lists, int n_lists, int n, int m) {
 
 void del_lists(struct LList *lists, int n_lists) {
   int i;
-  for (i = 0; i < n_lists; ++i)
-    del_list(&lists[i]);
+  for (i = 0; i < n_lists; ++i) del_list(&lists[i]);
 }
 
 void find_common(struct LList *lists, int n_lists, int *common_indices,
@@ -292,8 +277,7 @@ void find_common(struct LList *lists, int n_lists, int *common_indices,
   do {
     int is_common =
         find(&lists[1], it_0->val) != 0 && find(&lists[2], it_0->val) != 0;
-    if (is_common == 1)
-      break;
+    if (is_common == 1) break;
     it_0 = it_0->next;
   } while (it_0 != lists[0].head);
   *common = it_0->val;
@@ -412,7 +396,6 @@ void passw() {
 int main() {
   srand(time(0));
   int i, repetition_cnt = 3;
-  for (i = 0; i < repetition_cnt; ++i)
-    passw();
+  for (i = 0; i < repetition_cnt; ++i) passw();
   return 0;
 }

@@ -1,7 +1,7 @@
 #include "bst_delete.h"
 
 class Solution {
-public:
+ public:
   TreeNode *deleteNode(TreeNode *root, int key) {
     if (root == nullptr) {
       return root;

@@ -108,8 +108,7 @@ void numIslandsTest() {
   char **grid = malloc(Size * sizeof(char *));
   for (int i = 0; i < Size; i++) {
     grid[i] = malloc(ColSize * sizeof(char));
-    for (int j = 0; j < ColSize; j++)
-      grid[i][j] = grid_[i][j];
+    for (int j = 0; j < ColSize; j++) grid[i][j] = grid_[i][j];
   }
   int Cnt = numIslands(grid, Size, &ColSize);
   for (int i = 0; i < Size; i++) {
@@ -123,8 +122,7 @@ void numIslandsTest() {
 int *partitionLabels(char *s, int *returnSize) {
   int last[26] = {0};
   int slen = strlen(s);
-  for (int i = 0; i < slen; i++)
-    last[s[i] - 'a'] = i;
+  for (int i = 0; i < slen; i++) last[s[i] - 'a'] = i;
   int *sizes = malloc(sizeof(int) * slen);
   int sp = 0;
   for (int i = 0, S = 0, furthest = -1; i < slen; i++) {
@@ -183,17 +181,14 @@ int *twoSum(int *nums, int Size, int target, int *returnSize) {
     int key = target - reduced_arr[i];
     void *search_Res =
         bsearch(&key, reduced_arr, reduced_size, sizeof(int), twoSumSearchCmp);
-    if (!search_Res)
-      continue;
+    if (!search_Res) continue;
     indices = malloc(2 * sizeof(int));
     int val_0 = reduced_arr[i], val_1 = *(int *)search_Res;
     for (int i = Size - 1; i >= 0; i--) {
-      if (nums[i] == val_0)
-        indices[0] = i;
+      if (nums[i] == val_0) indices[0] = i;
     }
     for (int i = 0; i < Size; i++) {
-      if (nums[i] == val_1)
-        indices[1] = i;
+      if (nums[i] == val_1) indices[1] = i;
     }
     *returnSize = 2;
     break;
@@ -288,8 +283,7 @@ void mergeSort(int *Arr, int S, int E) {
 }
 
 void merge(int *Arr, int S, int E) {
-  if (E == S)
-    return;
+  if (E == S) return;
   int M = (E + S - 1) / 2;
   int *ExtraArr = malloc((E - S + 1) * sizeof(int));
   int I = E - S, L = M, R = E;
@@ -307,10 +301,8 @@ void merge(int *Arr, int S, int E) {
     Longer = R;
     Stop = M + 1;
   }
-  for (; Longer >= Stop; --Longer, --I)
-    ExtraArr[I] = Arr[Longer];
-  for (int I = 0; I < E - S + 1; ++I)
-    Arr[S + I] = ExtraArr[I];
+  for (; Longer >= Stop; --Longer, --I) ExtraArr[I] = Arr[Longer];
+  for (int I = 0; I < E - S + 1; ++I) Arr[S + I] = ExtraArr[I];
   free(ExtraArr);
 }
 
@@ -375,8 +367,7 @@ void mergeSortTest() {
 }
 
 void quickSort(int *Arr, int S, int E) {
-  if (S >= E)
-    return;
+  if (S >= E) return;
   int Pivot = S + rand() % (E - S + 1), PivotVal = Arr[Pivot];
   swap(Arr, Pivot, E);
   int NewPivot = -1;
@@ -477,8 +468,7 @@ struct Arr *genArmstrong(int N) {
     MutatedNum /= 10;
     Last = MutatedNum % 10;
     Sum += Last * Last * Last;
-    if (Sum == Num)
-      Res->ArrPtr[ResLen++] = Num;
+    if (Sum == Num) Res->ArrPtr[ResLen++] = Num;
   }
   Res->Len = ResLen;
   return Res;
@@ -490,8 +480,7 @@ void genArmstrongTest() {
   int Correct[] = {0, 1, 153, 370, 371, 407};
   int CorrectLen = sizeof(Correct) / sizeof(Correct[0]);
   assert(Res->Len == CorrectLen);
-  for (int I = 0; I < Res->Len; ++I)
-    assert(Res->ArrPtr[I] == Correct[I]);
+  for (int I = 0; I < Res->Len; ++I) assert(Res->ArrPtr[I] == Correct[I]);
   free(Res->ArrPtr);
   Res->ArrPtr = 0;
   free(Res);
@@ -558,20 +547,16 @@ int64_t *genNarc(int64_t N) {
 int genNarcCmp(const void *a, const void *b) {
   int arg1 = *(const int *)a;
   int arg2 = *(const int *)b;
-  if (arg1 < arg2)
-    return 1;
-  if (arg1 > arg2)
-    return -1;
+  if (arg1 < arg2) return 1;
+  if (arg1 > arg2) return -1;
   return 0;
 }
 
 int genNarcCmpRev(const void *a, const void *b) {
   int64_t arg1 = *(const int64_t *)a;
   int64_t arg2 = *(const int64_t *)b;
-  if (arg1 < arg2)
-    return -1;
-  if (arg1 > arg2)
-    return 1;
+  if (arg1 < arg2) return -1;
+  if (arg1 > arg2) return 1;
   return 0;
 }
 
@@ -589,8 +574,7 @@ void genNarcTest() {
       42678290603, 44708635679, 49388550606, 82693916578, 94204591914};
   int64_t CorrectLen = sizeof(Correct) / sizeof(Correct[0]);
   assert(Res[0] - 1 == CorrectLen);
-  for (int I = 1; I < Res[0]; ++I)
-    assert(Res[I] == Correct[I - 1]);
+  for (int I = 1; I < Res[0]; ++I) assert(Res[I] == Correct[I - 1]);
   free(Res);
   Res = 0;
   printf("PASSED\n");

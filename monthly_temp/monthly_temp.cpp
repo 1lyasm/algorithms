@@ -5,7 +5,7 @@
 #include <string>
 
 class Model {
-public:
+ public:
   static const int N_MONTH = 12;
   static const std::string MONTHS[12];
 
@@ -18,10 +18,10 @@ const std::string Model::MONTHS[12] = {
     "July",    "August",   "September", "October", "November", "December"};
 
 class Controller {
-private:
+ private:
   std::ifstream *ifile_ptr = NULL;
 
-public:
+ public:
   int version = 0;
   Controller(std::ifstream *ifile_ptr_arg) {
     Controller::ifile_ptr = ifile_ptr_arg;
@@ -50,8 +50,7 @@ void Controller::set_ifile_ptr(std::ifstream *ifile_ptr_arg) {
 void Controller::file_inp_monthly(Model &model) {
   for (int i = 0, month_counter = model.month_index; i < Model::N_MONTH;
        i++, month_counter++) {
-    if (month_counter >= Model::N_MONTH)
-      month_counter = 0;
+    if (month_counter >= Model::N_MONTH) month_counter = 0;
     (*Controller::ifile_ptr) >> model.monthly[i];
   }
   return;
@@ -75,8 +74,7 @@ std::string Controller::file_inp_ofile_name(void) {
 void Controller::inp_monthly(Model &model) {
   for (int i = 0, month_counter = model.month_index; i < Model::N_MONTH;
        i++, month_counter++) {
-    if (month_counter >= Model::N_MONTH)
-      month_counter = 0;
+    if (month_counter >= Model::N_MONTH) month_counter = 0;
     std::cout << "Rainfall for " << Model::MONTHS[month_counter]
               << "(ex: 300): ";
     std::cin >> model.monthly[i];
@@ -149,8 +147,7 @@ bool Controller::continues(void) {
 int Controller::search_str_arr(std::string target, const std::string arr[],
                                int size) {
   for (int index = 0; index < size; index++) {
-    if (arr[index] == target)
-      return index;
+    if (arr[index] == target) return index;
   }
   return -1;
 }
@@ -165,14 +162,14 @@ void Controller::inp_version(void) {
 }
 
 class View {
-private:
+ private:
   const int TABLE_WIDTH = 20;
   const int SCALE_FACTOR = 1000;
 
   Model *model_ptr = NULL;
   std::ostream *ostream_ptr = &std::cout;
 
-public:
+ public:
   std::ofstream ofile;
   char format_name = 't', output_place = 's';
   std::string ofile_name = "outfile.txt";
@@ -204,8 +201,7 @@ void View::print_graph(void) {
   int scaled_avg = View::scale((*View::model_ptr).avg);
   for (int i = 0, month_counter = (*View::model_ptr).month_index;
        i < Model::N_MONTH; i++, month_counter++) {
-    if (month_counter >= Model::N_MONTH)
-      month_counter = 0;
+    if (month_counter >= Model::N_MONTH) month_counter = 0;
     View::print_month_name(month_counter, 12);
     View::multiple_print('*', scale((*View::model_ptr).monthly[i]));
     (*View::ostream_ptr) << '\n' << std::setw(15) << "Average | ";
@@ -224,8 +220,7 @@ void View::print_table(void) {
   int avg = static_cast<int>((*View::model_ptr).avg);
   for (int i = 0, month_counter = (*View::model_ptr).month_index;
        i < Model::N_MONTH; i++, month_counter++) {
-    if (month_counter >= Model::N_MONTH)
-      month_counter = 0;
+    if (month_counter >= Model::N_MONTH) month_counter = 0;
     View::print_month_name(month_counter, 10);
     View::multiple_print(' ', static_cast<int>(View::TABLE_WIDTH * 0.4));
     (*View::ostream_ptr) << std::setw(10) << (*View::model_ptr).monthly[i];
@@ -267,8 +262,7 @@ void View::set_ostream(void) {
 }
 
 void View::multiple_print(char symbol, int times) {
-  for (int i = 0; i < times; i++)
-    (*View::ostream_ptr) << symbol;
+  for (int i = 0; i < times; i++) (*View::ostream_ptr) << symbol;
 }
 
 int View::scale(double num) {
@@ -282,8 +276,7 @@ int View::scale(double num) {
 
 void View::copy_arr(const double source_arr[], double destination_arr[],
                     int size) {
-  for (int i = 0; i < size; i++)
-    destination_arr[i] = source_arr[i];
+  for (int i = 0; i < size; i++) destination_arr[i] = source_arr[i];
   return;
 }
 
@@ -301,8 +294,7 @@ int main() {
 
   for (;;) {
     controller.inp_version();
-    if (controller.version < 0)
-      break;
+    if (controller.version < 0) break;
     if (controller.version == 2 || controller.version == 1) {
       controller.inp_avg(model.avg);
       controller.inp_month_index(model.month_index);

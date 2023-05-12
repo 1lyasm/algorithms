@@ -1,9 +1,10 @@
+#include <stdlib.h>
+#include <string.h>
+
 #include "../../include/character.h"
 #include "q2.h"
 #include "q5_6.h"
 #include "q7.h"
-#include <stdlib.h>
-#include <string.h>
 
 char *hex_product(char short_hex, char *long_hex) {
   const int HEX_BASE = 16;

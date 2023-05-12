@@ -1,5 +1,5 @@
 class Solution {
-public:
+ public:
   static std::string longestPalindrome(std::string s) {
     int StringLength = s.size();
     int MaximumPalindromeLength = 0;

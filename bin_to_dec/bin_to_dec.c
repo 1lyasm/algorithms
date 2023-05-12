@@ -1,6 +1,7 @@
+#include <stdio.h>
+
 #include "../../include/arithmetic.h"
 #include "q1.h"
-#include <stdio.h>
 
 const int N_BITS = 16;
 

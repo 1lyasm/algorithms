@@ -1,7 +1,8 @@
-#include "q3_4.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "q3_4.h"
 
 void test_convert_from_decimal_to_binary();
 void test_convert_from_decimal_to_hex();

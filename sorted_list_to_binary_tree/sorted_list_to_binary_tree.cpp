@@ -1,10 +1,10 @@
-#include "sorted_list_binary_tree.h"
-
 #include <deque>
 #include <vector>
 
+#include "sorted_list_binary_tree.h"
+
 class Solution {
-public:
+ public:
   int list_size(ListNode *head) {
     ListNode *it = head;
     int count = 0;

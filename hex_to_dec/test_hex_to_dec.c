@@ -1,6 +1,7 @@
-#include "q2.h"
 #include <assert.h>
 #include <stdio.h>
+
+#include "q2.h"
 
 void test_hex_to_decimal();
 

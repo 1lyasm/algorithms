@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 
 class Main {
-  public static void main(String[] args) { AddBinary.test(); }
+  public static void main(String[] args) {
+    AddBinary.test();
+  }
 }
 
 class RemoveDuplicates {
@@ -78,9 +80,8 @@ class SieveOfEratosthenes {
 
   public static void test() {
     System.out.print("Testing SieveOfEratosthenes: ");
-    ArrayList<Integer> Expected = new ArrayList<Integer>(
-        Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
-                      53, 59, 61, 67, 71, 73, 79, 83, 89, 97));
+    ArrayList<Integer> Expected = new ArrayList<Integer>(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19,
+        23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97));
     Integer UpperLimit = 100;
     ArrayList<Integer> Output = generatePrimes(UpperLimit);
     Integer ExpectedN = Expected.size();
@@ -297,8 +298,7 @@ class AddBinary {
 
   static public void test() {
     System.out.print("Testing AddBinary: ");
-    String Input1 = "11", Input2 = "1", ExpectedOutput = "100",
-           Output = addBinary(Input1, Input2);
+    String Input1 = "11", Input2 = "1", ExpectedOutput = "100", Output = addBinary(Input1, Input2);
     assert (ExpectedOutput.equals(Output));
     System.out.println("PASSED");
   }

@@ -79,22 +79,19 @@ void insertion_sort(int arr[], int size) {
 }
 
 void print_arr(const int arr[], int size) {
-  for (int i = 0; i < size; i++)
-    std::cout << arr[i] << '\n';
+  for (int i = 0; i < size; i++) std::cout << arr[i] << '\n';
   return;
 }
 
 void fill_count_arr(int count_arr[], const int arr[], int size) {
-  for (int i = 0; i < size; i++)
-    count_arr[i] = count(arr[i], arr, size);
+  for (int i = 0; i < size; i++) count_arr[i] = count(arr[i], arr, size);
   return;
 }
 
 int count(int target, const int arr[], int size) {
   int duplicate_num = 0;
   for (int i = 0; i < size; i++) {
-    if (arr[i] == target)
-      duplicate_num++;
+    if (arr[i] == target) duplicate_num++;
   }
   return duplicate_num;
 }

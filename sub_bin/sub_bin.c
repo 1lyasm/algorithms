@@ -1,10 +1,11 @@
-#include "../../include/character.h"
-#include "q5_6.h"
-#include "q9.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../../include/character.h"
+#include "q5_6.h"
+#include "q9.h"
 
 char *one_complement(char *binary_str, int len_compl) {
   int bin_len = strlen(binary_str);

@@ -1,8 +1,9 @@
-#include "q9.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "q9.h"
 
 void test_one_complement();
 void test_two_complement();

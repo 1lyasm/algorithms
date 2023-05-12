@@ -1,5 +1,6 @@
-#include "llst.h"
 #include <stdlib.h>
+
+#include "llst.h"
 
 void reorder(struct LList *L) {
   int n = L->size / 2;

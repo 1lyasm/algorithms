@@ -1,7 +1,8 @@
+#include <stdio.h>
+
 #include "../../include/arithmetic.h"
 #include "../../include/character.h"
 #include "q2.h"
-#include <stdio.h>
 
 const int N_DIGITS = 8;
 

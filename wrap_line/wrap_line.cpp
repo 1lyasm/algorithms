@@ -6,8 +6,7 @@
 
 template <typename T, typename U>
 void initializeArr(T &blankPos, U defaultVal) {
-  for (int i = 0; i < blankPos.size(); i++)
-    blankPos[i] = defaultVal;
+  for (int i = 0; i < blankPos.size(); i++) blankPos[i] = defaultVal;
 }
 
 void rightAdjust(int lineNum, std::ostream *oStream) {
@@ -33,8 +32,7 @@ void fillBlankPos(std::vector<int> &blankPos, std::string line) {
 void fillInsertPos(std::vector<int> &insertPos, std::vector<int> blankPos,
                    std::vector<int> gapLengthArr) {
   int prevIndex = 0, currentIndex = 0, filledSize = 0, indexToInsert = 0;
-  for (int i = 0; i < blankPos.size() && blankPos[i] >= 0; i++)
-    filledSize++;
+  for (int i = 0; i < blankPos.size() && blankPos[i] >= 0; i++) filledSize++;
   for (int i = 0; i < filledSize;) {
     while ((blankPos[i] < 72 + prevIndex + gapLengthArr[i]) && i < filledSize) {
       currentIndex = blankPos[i];
@@ -50,11 +48,9 @@ void fillGapLengthArr(std::vector<int> &gapLengthArr, std::vector<int> blankPos,
                       std::string line) {
   int gapLength(0), gapIndex(0), indexToAddLength(0);
   for (int i = 0; i < blankPos.size() - 1; i++) {
-    if (blankPos[i] < 0)
-      break;
+    if (blankPos[i] < 0) break;
     gapIndex = blankPos[i] + 1;
-    while (line[gapIndex] == ' ')
-      gapIndex++, gapLength++;
+    while (line[gapIndex] == ' ') gapIndex++, gapLength++;
     gapLengthArr[indexToAddLength] = gapLength;
     indexToAddLength++;
     gapLength = 0;
@@ -64,8 +60,7 @@ void fillGapLengthArr(std::vector<int> &gapLengthArr, std::vector<int> blankPos,
 void fillMultipleLines(std::vector<std::string> &multipleLines,
                        std::vector<int> insertPos, std::string line) {
   int filledSize(0), leftSideIndex(0), i(0);
-  for (int i = 0; i < insertPos.size() && insertPos[i] >= 0; i++)
-    filledSize++;
+  for (int i = 0; i < insertPos.size() && insertPos[i] >= 0; i++) filledSize++;
   for (; i < filledSize; i++) {
     multipleLines[i] =
         line.substr(leftSideIndex, insertPos[i] - leftSideIndex + 1);
@@ -79,8 +74,7 @@ void removeBlanks(std::vector<std::string> &multipleLines) {
   for (int i = 0; i < multipleLines.size(); i++) {
     deleteAmt = 0;
     for (int j = 0; j < multipleLines[i].size(); j++) {
-      if (multipleLines[i][j] != ' ')
-        break;
+      if (multipleLines[i][j] != ' ') break;
       deleteAmt++;
     }
     if (deleteAmt > 0) {
@@ -100,8 +94,7 @@ void copyWithLineNumber(std::ifstream *iFile, std::ostream *oStream) {
   std::vector<std::string> multipleLines(10);
   while (1) {
     (*iFile).get(c);
-    if ((*iFile).eof())
-      break;
+    if ((*iFile).eof()) break;
     line.push_back(c);
     if (c == '\n') {
       if (line.size() >= 72) {

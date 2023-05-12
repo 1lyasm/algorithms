@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 
 class Candidate {
-public:
+ public:
   long unsigned int wgt = 0;
   long double prob = 0;
 
-public:
+ public:
   Candidate(int wgt, long double prob) : wgt(wgt), prob(prob) {}
   void print() {
     std::cout << "Candidate: ("
@@ -15,10 +15,10 @@ public:
 };
 
 class Round {
-public:
+ public:
   std::list<std::list<Candidate>> players;
 
-public:
+ public:
   void print(void) {
     std::cout << "Round {\n";
     int node_cntr = 0;
@@ -44,7 +44,8 @@ public:
   void push_cand(Candidate cand) { this->players.back().push_back(cand); }
 };
 
-template <typename T> void print_vec(T val) {
+template <typename T>
+void print_vec(T val) {
   for (size_t i = 0; i <= val.size() - 1; i++) {
     std::cout << val[i];
     if (i != val.size() - 1) {

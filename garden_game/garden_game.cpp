@@ -5,18 +5,16 @@
 #include <random>
 #include <string>
 
-template <typename T> void print(const T &val) {
-  for (const auto &x : val)
-    std::cout << x << '\n';
+template <typename T>
+void print(const T &val) {
+  for (const auto &x : val) std::cout << x << '\n';
   std::cout << '\n';
 }
 
 void initializeGarden(int arr[][10], int nRow) {
-
   srand((unsigned short)time(NULL));
   for (int row = 0; row < nRow; row++) {
-    for (int col = 0; col < 10; col++)
-      arr[row][col] = rand() % 4;
+    for (int col = 0; col < 10; col++) arr[row][col] = rand() % 4;
   }
 }
 
@@ -76,8 +74,7 @@ void timeStep(int arr[][10], int nRow) {
     for (int col = 0; col < 10; col++) {
       if (arr[row][col] > 0 && changedArr[row][col] == false) {
         arr[row][col]++;
-        if (arr[row][col] > 3)
-          arr[row][col] = 0;
+        if (arr[row][col] > 3) arr[row][col] = 0;
       }
     }
   }

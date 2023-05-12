@@ -3,7 +3,8 @@ using namespace std;
 
 #define rep(i, s, e) for (int i = s; i <= e; i++)
 
-template <typename T> constexpr T myConv(T x, int n, T y, int m) {
+template <typename T>
+constexpr T myConv(T x, int n, T y, int m) {
   T w, t, s;
   pair<double, double> rw{}, rt{};
   if (n > m) {

@@ -52,9 +52,10 @@ void Regex::test() {
     }
   }
   {
-    std::regex Regex("[bcdfghjklmnpqrstvwxyz]*a[bcdfghjklmnpqrstvwxyz]*e["
-                     "bcdfghjklmnpqrstvwxyz]*i[bcdfghjklmnpqrstvwxyz]*o["
-                     "bcdfghjklmnpqrstvwxyz]*u[bcdfghjklmnpqrstvwxyz]*");
+    std::regex Regex(
+        "[bcdfghjklmnpqrstvwxyz]*a[bcdfghjklmnpqrstvwxyz]*e["
+        "bcdfghjklmnpqrstvwxyz]*i[bcdfghjklmnpqrstvwxyz]*o["
+        "bcdfghjklmnpqrstvwxyz]*u[bcdfghjklmnpqrstvwxyz]*");
     std::smatch Match;
     std::vector<std::string> MatchingStrings = {"aeiou", "baeiou", "aeioub",
                                                 "abeioub", "zbabebibobubz"};
@@ -179,8 +180,8 @@ void ClimbStairs::test() {
   std::cout << "PASSED";
 }
 
-DeleteDuplicates::ListNode *
-DeleteDuplicates::deleteDuplicates(DeleteDuplicates::ListNode *head) {
+DeleteDuplicates::ListNode *DeleteDuplicates::deleteDuplicates(
+    DeleteDuplicates::ListNode *head) {
   if (head == 0 || head->next == 0) {
     return head;
   }
@@ -354,9 +355,8 @@ double PageRank::sumVector(std::vector<double> Vector) {
   return Sum;
 }
 
-std::vector<int>
-PageRank::computeOutgoingWeights(std::vector<std::vector<double>> Graph,
-                                 int NodeCount) {
+std::vector<int> PageRank::computeOutgoingWeights(
+    std::vector<std::vector<double>> Graph, int NodeCount) {
   std::vector<int> OutgoingWeights(NodeCount, 0);
   for (int ColumnNodeIndex = 0; ColumnNodeIndex < NodeCount;
        ++ColumnNodeIndex) {
@@ -402,7 +402,8 @@ void PageRank::assertClose(double Value1, double Value2) {
   assert(std::fabs(Value1 - Value2) <= Threshold);
 }
 
-template <typename T> void PageRank::printVector(std::vector<T> Vector) {
+template <typename T>
+void PageRank::printVector(std::vector<T> Vector) {
   for (const auto &Value : Vector) {
     std::cout << Value << " ";
   }
@@ -506,8 +507,7 @@ int ReverseInteger::string_to_int(std::string s) {
       return -1;
     }
     val += (s[i] - 48) * multiplier;
-    if (2147483648 / 10.0 > multiplier)
-      multiplier *= 10;
+    if (2147483648 / 10.0 > multiplier) multiplier *= 10;
   }
   return val;
 }

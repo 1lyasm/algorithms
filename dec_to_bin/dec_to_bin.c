@@ -1,7 +1,8 @@
-#include "../../include/character.h"
-#include "q3_4.h"
 #include <stdio.h>
 #include <string.h>
+
+#include "../../include/character.h"
+#include "q3_4.h"
 
 void convert_from_decimal(unsigned long decimal, int base, char *bit_str,
                           int bit_str_len) {

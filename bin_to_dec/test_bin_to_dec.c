@@ -1,6 +1,7 @@
-#include "q1.h"
 #include <assert.h>
 #include <stdio.h>
+
+#include "q1.h"
 
 void test_binary_to_decimal();
 
