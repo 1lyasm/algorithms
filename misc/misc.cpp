@@ -9,7 +9,6 @@ void Regex::test() {
                                             "xyxy", "xyxyxy", ""};
     for (const auto &TestString : TestStrings)
       assert(std::regex_match(TestString, Match, Regex) == 1);
-  }
   {
     std::regex Regex("b(oz)+o");
     std::smatch Match;
