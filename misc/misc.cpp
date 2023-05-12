@@ -141,10 +141,7 @@ void MySqrt::test() {
 }
 
 int ClimbStairs::climbStairs(int n) {
-  if (n == 1)
-    return 1;
-  else if (n == 2)
-    return 2;
+  if (n <= 2) return n;
   int First = 1;
   int Second = 2;
   int Third = Second + First;
@@ -322,9 +319,8 @@ std::vector<double> PageRank::pageRank(std::vector<std::vector<double>> Graph,
 
 double PageRank::sumVector(std::vector<double> Vector) {
   double Sum = 0.0;
-  for (const auto &Value : Vector) {
+  for (const auto &Value : Vector)
     Sum += Value;
-  }
   return Sum;
 }
 
@@ -351,9 +347,8 @@ inline double PageRank::updatePageRankValue(
   double UpdateValue = DampingTerm;
   double PageRankSum = 0;
   for (int OtherNodeIndex = 0; OtherNodeIndex < NodeCount; ++OtherNodeIndex) {
-    if (OtherNodeIndex == NodeIndex) {
+    if (OtherNodeIndex == NodeIndex)
       continue;
-    }
     if (std::ceil(Graph[NodeIndex][OtherNodeIndex]) == 1) {
       PageRankSum +=
           OldValues[OtherNodeIndex] / OutgoingWeights[OtherNodeIndex];
@@ -365,9 +360,8 @@ inline double PageRank::updatePageRankValue(
 void PageRank::assertCloseVector(std::vector<double> Vector1,
                                  std::vector<double> Vector2, int Length) {
   double Threshold = 0.000001;
-  for (int I = 0; I < Length; ++I) {
+  for (int I = 0; I < Length; ++I)
     assert(std::fabs(Vector1[I] - Vector2[I]) <= Threshold);
-  }
 }
 
 void PageRank::assertClose(double Value1, double Value2) {
@@ -377,9 +371,8 @@ void PageRank::assertClose(double Value1, double Value2) {
 
 template <typename T>
 void PageRank::printVector(std::vector<T> Vector) {
-  for (const auto &Value : Vector) {
+  for (const auto &Value : Vector)
     std::cout << Value << " ";
-  }
   std::cout << "\n";
 }
 
@@ -404,13 +397,11 @@ void PageRank::test() {
 }
 
 std::string ZigzagConversion::zigzag_conv(std::string s, int row_count) {
-  if (s.size() < 2 || row_count == 1) {
+  if (s.size() < 2 || row_count == 1)
     return s;
-  }
   std::string result;
-  for (int i = 0; i < s.size(); i += 2 * row_count - 2) {
+  for (int i = 0; i < s.size(); i += 2 * row_count - 2)
     result.push_back(s[i]);
-  }
   for (int i = 1; i < row_count - 1; ++i) {
     bool mode = false;
     for (int j = i; j < s.size();) {
@@ -424,9 +415,8 @@ std::string ZigzagConversion::zigzag_conv(std::string s, int row_count) {
       }
     }
   }
-  for (int i = row_count - 1; i < s.size(); i += 2 * row_count - 2) {
+  for (int i = row_count - 1; i < s.size(); i += 2 * row_count - 2)
     result.push_back(s[i]);
-  }
   return result;
 }
 
@@ -439,13 +429,11 @@ void ZigzagConversion::test() {
 }
 
 int ReverseInteger::reverse(int x) {
-  if (x <= 9 && x >= -9) {
+  if (x <= 9 && x >= -9)
     return x;
-  }
   bool is_negative = false;
-  if (x < 0) {
+  if (x < 0)
     is_negative = true;
-  }
   x = std::abs(x);
   std::string x_str;
   int val = x;
@@ -454,20 +442,18 @@ int ReverseInteger::reverse(int x) {
     val /= 10;
   }
   int first_nonzero = 0;
-  for (; first_nonzero < x_str.size() && x_str[first_nonzero] == '0';) {
+  for (; first_nonzero < x_str.size() && x_str[first_nonzero] == '0';)
     ++first_nonzero;
-  }
   std::string x_str_stripped;
-  for (int i = first_nonzero; i < x_str.size(); ++i) {
+  for (int i = first_nonzero; i < x_str.size(); ++i)
     x_str_stripped.push_back(x_str[i]);
-  }
   x_str = x_str_stripped;
   int as_int = string_to_int(x_str);
-  if (as_int == -1) {
+  if (as_int == -1)
     return 0;
-  } else if (is_negative) {
+  else if (is_negative)
     return as_int * -1;
-  } else {
+  else {
     return as_int;
   }
 }
@@ -476,9 +462,8 @@ int ReverseInteger::string_to_int(std::string s) {
   int val = 0;
   int multiplier = 1;
   for (int i = s.size() - 1; i >= 0; --i) {
-    if ((2147483648 - val) / (double)multiplier <= (s[i] - 48)) {
+    if ((2147483648 - val) / (double)multiplier <= (s[i] - 48))
       return -1;
-    }
     val += (s[i] - 48) * multiplier;
     if (2147483648 / 10.0 > multiplier) multiplier *= 10;
   }
