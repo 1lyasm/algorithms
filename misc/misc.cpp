@@ -14,18 +14,16 @@ void Regex::test() {
     std::regex Regex("b(oz)+o");
     std::smatch Match;
     std::vector<std::string> TestStrings = {"bozo", "bozozo", "bozozozo"};
-    for (const auto &TestString : TestStrings) {
+    for (const auto &TestString : TestStrings) 
       assert(std::regex_match(TestString, Match, Regex) == 1);
-    }
   }
   {
     std::regex Regex("((|0)1)*");
     std::smatch Match;
     std::vector<std::string> TestStrings = {"01", "0101", "010101", "1",
                                             "11", "111",  ""};
-    for (const auto &TestString : TestStrings) {
+    for (const auto &TestString : TestStrings) 
       assert(std::regex_match(TestString, Match, Regex) == 1);
-    }
   }
   {
     std::regex Regex("[ab]*a[ab]*a[ab]*a[ab]*");
@@ -33,9 +31,8 @@ void Regex::test() {
     std::vector<std::string> TestStrings = {
         "aaab", "baaa",  "abaa",    "aaba",          "aaab",      "aaa",
         "aaaa", "aaaab", "abababa", "bbbbbbbbbbaaa", "bbabbabbab"};
-    for (const auto &TestString : TestStrings) {
+    for (const auto &TestString : TestStrings)
       assert(std::regex_match(TestString, Match, Regex) == 1);
-    }
   }
   {
     std::regex Regex("(a*(bb)*a*)*");
@@ -46,9 +43,8 @@ void Regex::test() {
     }
     std::vector<std::string> NonMatchingStrings = {"aba", "b", "ababa",
                                                    "abbab"};
-    for (const auto &NonMatchingString : NonMatchingStrings) {
-      assert(std::regex_match(NonMatchingString, Match, Regex) == 0);
-    }
+    for (const auto &NonMatchingString : NonMatchingStrings) 
+     assert(std::regex_match(NonMatchingString, Match, Regex) == 0);
   }
   {
     std::regex Regex(
@@ -58,9 +54,8 @@ void Regex::test() {
     std::smatch Match;
     std::vector<std::string> MatchingStrings = {"aeiou", "baeiou", "aeioub",
                                                 "abeioub", "zbabebibobubz"};
-    for (const auto &MatchingString : MatchingStrings) {
+    for (const auto &MatchingString : MatchingStrings)
       assert(std::regex_match(MatchingString, Match, Regex) == 1);
-    }
     std::vector<std::string> NonMatchingStrings = {"aba", "b", "ababa",
                                                    "abbab"};
     for (const auto &NonMatchingString : NonMatchingStrings) {
