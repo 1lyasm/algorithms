@@ -42,7 +42,7 @@ int main() {
     }
   }
 
-  for (int termCounter = 1, courseLeft = 1; ; ++termCounter) {
+  for (int termCounter = 1, courseLeft = 1;; ++termCounter) {
     int hasPrintedTermNum = 0;
     courseLeft = 0;
 
