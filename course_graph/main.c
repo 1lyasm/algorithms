@@ -50,8 +50,7 @@ int main() {
     }
 
     // allocate just enough space for a list
-    adjList[i] =
-        malloc((childCounts[i] + 1) * sizeof(struct GNode));
+    adjList[i] = malloc((childCounts[i] + 1) * sizeof(struct GNode));
 
     // put node itself as first element of each list
     adjList[i][0].id = i + 1;
