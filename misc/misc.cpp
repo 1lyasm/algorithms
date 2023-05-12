@@ -107,8 +107,7 @@ bool IsPalindrome::isPalindrome(int x) {
   for (int I = N - 1; I >= (N + 1) / 2; --I)
     LastHalf.push_back(NumberString[I]);
   for (int I = 0; I < LastHalf.length(); ++I)
-    if (LastHalf[I] != NumberString[I])
-      return false;
+    if (LastHalf[I] != NumberString[I]) return false;
   return true;
 }
 
@@ -122,8 +121,7 @@ void IsPalindrome::test() {
 }
 
 int MySqrt::mySqrt(int x) {
-  if (x == 0)
-    return 0;
+  if (x == 0) return 0;
   int Subtractor = 1;
   int SquareRootCounter = -1;
   while (x >= 0) {
@@ -167,8 +165,7 @@ void ClimbStairs::test() {
 
 DeleteDuplicates::ListNode *DeleteDuplicates::deleteDuplicates(
     DeleteDuplicates::ListNode *head) {
-  if (head == 0 || head->next == 0)
-    return head;
+  if (head == 0 || head->next == 0) return head;
   auto LeftNodePointer = head;
   auto RightNodePointer = head->next;
   while (RightNodePointer) {
@@ -203,8 +200,7 @@ void DeleteDuplicates::test() {
 
 void MergeSortedArray::merge(std::vector<int> &nums1, int m,
                              std::vector<int> &nums2, int n) {
-  if (!n)
-    return;
+  if (!n) return;
   int RightIndex = n - 1;
   int LeftIndex = m - 1;
   int TotalIndex = n + m - 1;
@@ -240,8 +236,7 @@ void MergeSortedArray::test() {
   std::vector<int> Numbers2 = {2, 5, 6};
   MergeSortedArray::merge(Numbers1, 3, Numbers2, 3);
   std::vector<int> Expected = {1, 2, 2, 3, 5, 6};
-  for (int I = 0; I < Expected.size(); ++I)
-    assert(Numbers1[I] == Expected[I]);
+  for (int I = 0; I < Expected.size(); ++I) assert(Numbers1[I] == Expected[I]);
   std::cout << "PASSED";
 }
 
