@@ -14,7 +14,7 @@ void Regex::test() {
     std::regex Regex("b(oz)+o");
     std::smatch Match;
     std::vector<std::string> TestStrings = {"bozo", "bozozo", "bozozozo"};
-    for (const auto &TestString : TestStrings) 
+    for (const auto &TestString : TestStrings)
       assert(std::regex_match(TestString, Match, Regex) == 1);
   }
   {
@@ -22,7 +22,7 @@ void Regex::test() {
     std::smatch Match;
     std::vector<std::string> TestStrings = {"01", "0101", "010101", "1",
                                             "11", "111",  ""};
-    for (const auto &TestString : TestStrings) 
+    for (const auto &TestString : TestStrings)
       assert(std::regex_match(TestString, Match, Regex) == 1);
   }
   {
@@ -43,8 +43,8 @@ void Regex::test() {
     }
     std::vector<std::string> NonMatchingStrings = {"aba", "b", "ababa",
                                                    "abbab"};
-    for (const auto &NonMatchingString : NonMatchingStrings) 
-     assert(std::regex_match(NonMatchingString, Match, Regex) == 0);
+    for (const auto &NonMatchingString : NonMatchingStrings)
+      assert(std::regex_match(NonMatchingString, Match, Regex) == 0);
   }
   {
     std::regex Regex(
