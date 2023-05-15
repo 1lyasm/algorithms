@@ -27,8 +27,8 @@ void print_matrix(int mat[256][256], int n) {
   }
 }
 
-void find_path(int mat[256][256],
-  int x, int y, int n, int *path_count, int path[256][2], int *path_top) {
+void find_path(int mat[256][256], int x, int y, int n, int *path_count,
+               int path[256][2], int *path_top) {
   int i;
   if (x == n - 1 && y == n - 1) {
     path[*path_top][0] = x;
@@ -46,11 +46,10 @@ void find_path(int mat[256][256],
   }
   if (mat[x][y] == 0) {
     return;
-  }
-  else {
+  } else {
     path[*path_top][0] = x;
     path[*path_top][1] = y;
-    ++*path_top; 
+    ++*path_top;
   }
   int path_copy[256][2];
   for (i = 0; i < *path_top; ++i) {
