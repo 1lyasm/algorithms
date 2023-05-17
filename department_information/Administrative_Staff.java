@@ -1,12 +1,11 @@
 package department_information;
 public class Administrative_Staff extends Staff {
-
   public Administrative_Staff(int staff_id, String name, String web) {
     this.staff_id = staff_id;
     this.name = name;
     this.web = web;
   }
-  
+
   public void add_commission(Department department, Commission commission) {
     department.getCommissions().add(commission);
   }
@@ -17,12 +16,12 @@ public class Administrative_Staff extends Staff {
 
   public void add_staff_to_commission(Department d, int staff_id, String commission_name) {
     int com_id = 0;
-    for (Commission c: d.getCommissions()) {
+    for (Commission c : d.getCommissions()) {
       if (c.getName().equals(commission_name)) {
         com_id = c.getCommission_id();
       }
     }
-    for (Academic_Staff a: d.getAcademic_staffs()) {
+    for (Academic_Staff a : d.getAcademic_staffs()) {
       if (a.getStaff_id() == staff_id) {
         a.setCom_id(com_id);
       }
@@ -31,11 +30,13 @@ public class Administrative_Staff extends Staff {
 
   public void print_commission_information(Department d) {
     for (Commission c : d.getCommissions()) {
-      System.out.println("\t" + Integer.toString(c.getCommission_id()) + ". Commission: " + c.getName());
+      System.out.println(
+          "\t" + Integer.toString(c.getCommission_id()) + ". Commission: " + c.getName());
       boolean there_is_staff = false;
-      for (Academic_Staff a: d.getAcademic_staffs()) {
+      for (Academic_Staff a : d.getAcademic_staffs()) {
         if (c.getCommission_id() == a.getCom_id()) {
-          System.out.println("\t\t" + Integer.toString(c.getCommission_id()) + ". Academic Personal: " + a.getName());
+          System.out.println("\t\t" + Integer.toString(c.getCommission_id())
+              + ". Academic Personal: " + a.getName());
           there_is_staff = true;
         }
       }
@@ -56,7 +57,7 @@ public class Administrative_Staff extends Staff {
   }
 
   public Commission get_commission(Department d, String name) {
-    for (Commission c: d.getCommissions()) {
+    for (Commission c : d.getCommissions()) {
       if (c.getName().equals(name)) {
         return c;
       }
@@ -81,8 +82,8 @@ public class Administrative_Staff extends Staff {
   }
 
   @Override
-  public void print_staff_information() {   
-    System.out.println("\tName: " + this.name + ", Mail: " + this.mail +
-      ", Staff ID: " + this.staff_id + ", Web: " + this.web + "\n");
+  public void print_staff_information() {
+    System.out.println("\tName: " + this.name + ", Mail: " + this.mail
+        + ", Staff ID: " + this.staff_id + ", Web: " + this.web + "\n");
   }
 }

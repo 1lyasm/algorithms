@@ -58,7 +58,7 @@ public class Department {
   }
 
   public void print_academic_staffs_information() {
-    for (Academic_Staff a: this.academic_staffs) {
+    for (Academic_Staff a : this.academic_staffs) {
       System.out.print(a.getOffice() + " ");
     }
   }

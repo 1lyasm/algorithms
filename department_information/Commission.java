@@ -1,7 +1,6 @@
 package department_information;
 
 public class Commission {
-
   public int getCommission_id() {
     return commission_id;
   }

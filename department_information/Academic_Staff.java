@@ -3,7 +3,6 @@ package department_information;
 import java.util.ArrayList;
 
 public class Academic_Staff extends Staff {
-
   int com_id;
   public int getCom_id() {
     return com_id;
@@ -31,7 +30,7 @@ public class Academic_Staff extends Staff {
 
   String office;
   ArrayList<String> research_areas;
-  
+
   public Academic_Staff(int staff_id, String name, String web, String mail, String office) {
     this.staff_id = staff_id;
     this.name = name;
@@ -62,13 +61,13 @@ public class Academic_Staff extends Staff {
 
   @Override
   public void print_staff_information() {
-      System.out.println("Name: " + this.name + ", Mail: " + this.mail +
-        ", Staff_id: " + this.staff_id + ", Web: " + this.web + ", Com. ID: " + this.com_id +
-          ", Office: " + this.office + "\n" + this.name + " Research Areas: ");
-      for (String s: this.research_areas) {
-        System.out.println(s + " ");
-      }
-      System.out.println("\n");
+    System.out.println("Name: " + this.name + ", Mail: " + this.mail
+        + ", Staff_id: " + this.staff_id + ", Web: " + this.web + ", Com. ID: " + this.com_id
+        + ", Office: " + this.office + "\n" + this.name + " Research Areas: ");
+    for (String s : this.research_areas) {
+      System.out.println(s + " ");
+    }
+    System.out.println("\n");
   }
 
   public ArrayList<String> get_research_areas() {
