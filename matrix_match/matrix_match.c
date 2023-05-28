@@ -35,18 +35,15 @@ char* takeUsername() {
 }
 
 /*  */
-void playAuto(struct Matrix* mat) { ; }
+void playAuto(struct Matrix* mat) { 
+    ;
+}
 
 /*  */
 void playManual(struct Matrix* mat) { ; }
 
 /*  */
 void play(struct Matrix* mat, int is_auto) {
-  int i = 0, j = 0;
-  for (i = 0; i < mat->n; ++i) {
-    for (j = 0; j < mat->n; ++j) printf("%d ", mat->mat[i][j]);
-    printf("\n");
-  }
   if (is_auto == 1)
     playAuto(mat);
   else
@@ -91,6 +88,25 @@ void makeRandom(struct Matrix* mat) {
   free(pool);
 }
 
+/**/
+void makeFromFile(struct Matrix* mat) {
+    char fileName[20] = {0};
+    int i, j, temp;
+    FILE* data;
+    printf("Dosya Adini Giriniz: ");
+    scanf("%s", fileName);
+    data = fopen(fileName, "r");
+    if (!data) {
+        printf("Dosya Acilamadi!");
+        exit(EXIT_FAILURE);
+    }
+    while (!feof(data)) {
+        fscanf(data, "%d %d %d\n", &i, &j, &temp);
+        mat->mat[i][j] = temp;
+    }
+    fclose(data);
+}
+
 /*  */
 struct Matrix* makeMatrix(char makeMode) {
   int n = takeN();
@@ -98,7 +114,7 @@ struct Matrix* makeMatrix(char makeMode) {
   if (makeMode == 'r')
     makeRandom(mat);
   else
-    ;
+    makeFromFile(mat);
   return mat;
 }
 
@@ -159,6 +175,5 @@ int main(void) {
   srand((unsigned int)time(0));
   while (1) runMainMenu();
 
-  printf("\n");
   return 0;
 }
