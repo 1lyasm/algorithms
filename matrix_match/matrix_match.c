@@ -35,9 +35,7 @@ char* takeUsername() {
 }
 
 /*  */
-void playAuto(struct Matrix* mat) { 
-    ;
-}
+void playAuto(struct Matrix* mat) { ; }
 
 /*  */
 void playManual(struct Matrix* mat) { ; }
@@ -90,21 +88,21 @@ void makeRandom(struct Matrix* mat) {
 
 /**/
 void makeFromFile(struct Matrix* mat) {
-    char fileName[20] = {0};
-    int i, j, temp;
-    FILE* data;
-    printf("Dosya Adini Giriniz: ");
-    scanf("%s", fileName);
-    data = fopen(fileName, "r");
-    if (!data) {
-        printf("Dosya Acilamadi!");
-        exit(EXIT_FAILURE);
-    }
-    while (!feof(data)) {
-        fscanf(data, "%d %d %d\n", &i, &j, &temp);
-        mat->mat[i][j] = temp;
-    }
-    fclose(data);
+  char fileName[20] = {0};
+  int i, j, temp;
+  FILE* data;
+  printf("Dosya Adini Giriniz: ");
+  scanf("%s", fileName);
+  data = fopen(fileName, "r");
+  if (!data) {
+    printf("Dosya Acilamadi!");
+    exit(EXIT_FAILURE);
+  }
+  while (!feof(data)) {
+    fscanf(data, "%d %d %d\n", &i, &j, &temp);
+    mat->mat[i][j] = temp;
+  }
+  fclose(data);
 }
 
 /*  */
