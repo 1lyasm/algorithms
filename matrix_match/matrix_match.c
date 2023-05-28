@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <>
+#include <time.h>
 
 /*  */
 struct Matrix {
@@ -70,6 +70,14 @@ int takeN() {
 }
 
 /**/
+void printIntArray(int* array, int size) {
+   int i = 0;
+   for (i = 0; i < size; ++i)
+       printf("%d ", array[i]);
+   printf("\n");
+}
+
+/**/
 void makeRandom(struct Matrix* mat) {
     int poolSize = 2 * mat->n;
     int* pool = malloc(poolSize * sizeof(int));
@@ -78,7 +86,7 @@ void makeRandom(struct Matrix* mat) {
     int xIndex = 0, yIndex = 0;
     for (i = 0; i < poolSize; ++i)
         pool[i] = i % (poolSize / 2) + 1;
-    for (i = 0; i < poolSize; ++i) {
+    for (i = 0; i < 2 * mat->n; ++i) {
         randomIndex = rand() % poolSize;
         randomValue = pool[randomIndex];
         do {
@@ -153,7 +161,7 @@ void runMainMenu(void) {
 
 int main(void)
 {
-    srand(time(0));
+    srand((unsigned int) time(0));
     while (1) runMainMenu();
 
     printf("\n");
