@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-void genCombinations(char *s, int n, int k) {
-	int combinationCount = 0;
+void genPermutations(char *s, int n, int k) {
+	int permutationCount = 0;
 	int *indices = malloc(k * sizeof(int));
 	if (indices == 0) {
 		printf("\nmalloc failed\n");
@@ -21,11 +21,51 @@ void genCombinations(char *s, int n, int k) {
 				incrementedIndex != 0;) {
 			indices[incrementedIndex--] = 0;
 		}
+		++permutationCount;
+	}
+	free(indices);
+	printf("\n\npermutation count: %d\n", permutationCount);
+}
+
+void genCombinations(char *s, int n, int k) {
+	int combinationCount = 0;
+	int *indices = malloc(k * sizeof(int));
+	int i;
+	int validReverseIndex;
+	if (indices == 0) {
+		printf("\nmalloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	for (i = 0; i < k; ++i) {
+		indices[i] = i;
+	}
+	while (validReverseIndex != k) {
+		int i;
+		int incrementedIndex;
+		for (i = 0; i < k; ++i)
+			putchar(s[indices[i]]);
+		putchar('\n');
+		if (++indices[k - 1] == n) {
+			int currentValue;
+			validReverseIndex = 1;
+			while (indices[k - 1 - validReverseIndex] + validReverseIndex + 1 == n) {
+				++validReverseIndex;
+			}
+			if (validReverseIndex != k) {
+				++indices[k - 1 - validReverseIndex];
+				currentValue = indices[k - 1 - validReverseIndex];
+				for (i = k - validReverseIndex; i < k; ++i) {
+					indices[i] = ++currentValue;
+				}
+			}
+		}
 		++combinationCount;
 	}
 	free(indices);
 	printf("\n\ncombination count: %d\n", combinationCount);
 }
+
+
 
 int main() {
 	char s[] = "abcdefg"; 
@@ -42,6 +82,9 @@ int main() {
 		fputs("\nsetvbuf failed\n", stdout);
 		exit(EXIT_FAILURE);
 	}
+	start = clock();
+	genPermutations(s, n, k);
+	printf("\n\ngeneration duration: %ld\n", clock() - start);
 	start = clock();
 	genCombinations(s, n, k);
 	printf("\n\ngeneration duration: %ld\n", clock() - start);
