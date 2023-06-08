@@ -20,13 +20,11 @@ void genPalindromicNumbers(int digitCount) {
 
 int main() {
 	size_t bufferSize = pow(2, 17) * sizeof(char);
-	printf("\n%llu\n", bufferSize);
 	char* buffer = malloc(bufferSize);
 	if (!buffer) {
 		fputs("\nmalloc failed\n", stdout);
 		exit(EXIT_FAILURE);
 	}
-	printf("\nhey\n");
 	if (setvbuf(stdout, buffer, _IOFBF, bufferSize)) {
 		fputs("\nsetvbuf failed\n", stdout);
 		exit(EXIT_FAILURE);
