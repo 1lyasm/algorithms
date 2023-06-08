@@ -19,7 +19,7 @@ void genPalindromicNumbers(int digitCount) {
 }
 
 int main() {
-	size_t bufferSize = pow(2, 20) * sizeof(char);
+	size_t bufferSize = pow(2, 17) * sizeof(char);
 	printf("\n%llu\n", bufferSize);
 	char* buffer = malloc(bufferSize);
 	if (!buffer) {
