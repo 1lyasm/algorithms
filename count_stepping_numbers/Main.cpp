@@ -1,76 +1,104 @@
+#include <cassert>
+#include <chrono>
 #include <iostream>
 #include <string>
+#include <unordered_map>
+#include <vector>
+
+#define MODULO (1000000000 + 7)
 
 class Solution {
  public:
-  static int countSubtree(std::string Low, std::string High,
-                          bool HasReachedNonZero, bool isFirst) {
-    if (Low[0] != '0') {
-      HasReachedNonZero = true;
+  static int countSteppingNumbers(std::string low, std::string high) {
+    std::size_t InitSize = 10000;
+    std::unordered_map<std::string, long long> Lookup(InitSize);
+    if (low.size() == high.size()) {
+      return static_cast<int>(countSameLen(low, high, &Lookup));
     }
-    if (Low[0] < '0' || Low[0] > '9') {
-      return 0;
-    } else if (Low.size() == 1) {
-      return 1;
-    }
-    std::cout << "Low: \"" << Low << "\", High: \"" << High << "\"\n";
-    int Cnt = 0;
-    std::string Lower = Low.substr(1, Low.size() - 1), Higher = Lower;
-    Lower[0] = Low[0] - 1;
-    Higher[0] = Low[0] + 1;
-    std::string UpperBound = High.substr(1, High.size() - 1);
-    bool countHigher = false, countLower = !isFirst;
-    if (isFirst) {
-      isFirst = false;
-      countLower = Lower[0] >= Low[1];
-    }
-    if (countLower) {
-      Cnt += countSubtree(Lower, UpperBound, HasReachedNonZero, isFirst);
-    }
-    if (Low[0] == '0' && !HasReachedNonZero) {
-      Cnt += countSteppingNumbers(Low.substr(1, Low.size() - 1),
-                                  std::string(High.size() - 1, '9'));
-    } else {
-      if (Low[0] == High[0]) {
-        if (Higher[0] >= Low[1] && Higher[0] <= High[1]) {
-          countHigher = true;
-        }
-      } else {
-        countHigher = true;
-      }
-      if (countHigher) {
-        Cnt += countSubtree(Higher, UpperBound, HasReachedNonZero, isFirst);
+    long long Cnt = 0;
+    Cnt += countSameLen(low, std::string(low.size(), '9'), &Lookup);
+    for (std::string::size_type I = low.size() + 1; I < high.size(); ++I) {
+      std::string LBound = "1";
+      LBound.append(I - 1, '0');
+      Cnt += countSameLen(LBound, std::string(I, '9'), &Lookup);
+      if (Cnt >= MODULO) {
+        Cnt %= MODULO;
       }
     }
-    std::cout << "countSubtree: Cnt: " << Cnt << "\n";
-    return Cnt;
+    std::string LBound = "1";
+    LBound.append(high.size() - 1, '0');
+    Cnt += countSameLen(LBound, high, &Lookup);
+    if (Cnt >= MODULO) {
+      Cnt %= MODULO;
+    }
+    return static_cast<int>(Cnt);
   }
 
-  static int countSteppingNumbers(std::string Low, std::string High) {
-    int Cnt = 0;
-    // if (Low.size() == 1) {
-    //   Cnt += 10 - (Low[0] - '0');
-    //   Low = "10";
-    // }
-    Low.insert(0, std::string(High.size() - Low.size(), '0'));
-    for (int I = Low[0] - '0'; I <= High[0] - '0'; ++I) {
-      if (I == High[0] - '0') {
-        Cnt += countSubtree(Low, High, Low[0] != '0', I == Low[0] - '0');
-      } else {
-        int ZeroCnt = 0;
-        for (int i = 0; i < Low.size(); ++i) {
-          if (Low[i] != '0') {
-            break;
-          }
-          ++ZeroCnt;
-        }
-        std::string UpperBound = std::string(ZeroCnt, '0');
-        UpperBound.append(std::string(Low.size() - ZeroCnt, '9'));
-        Cnt += countSubtree(Low, UpperBound, Low[0] != '0', I == Low[0] - '0');
-      }
-      ++Low[0];
+  static int countSameLen(const std::string& low, const std::string& high,
+                          std::unordered_map<std::string, long long>* Lookup) {
+    if (low.size() == 1) {
+      return high[0] - low[0] + 1;
     }
-    std::cout << "countSteppingNumbers: Cnt: " << Cnt << "\n";
-    return Cnt;
+    long long Cnt = 0;
+    std::string Str = low;
+    for (int I = Str[0] - '0'; I <= high[0] - '0'; ++I) {
+      std::string Lower = Str, Higher = Str;
+      Lower[1] = Str[0] - 1;
+      Higher[1] = Str[0] + 1;
+      if (!Lower.empty()) {
+        Cnt += countSubtree(Lower, 1, low, high, Lookup) +
+               countSubtree(Higher, 1, low, high, Lookup);
+      } else {
+        Cnt += 1;
+      }
+      Str[0] = static_cast<char>(I + 1 + '0');
+    }
+    return Cnt % MODULO;
+  }
+
+  static int countSubtree(std::string& Str, std::string::size_type CurIdx,
+                          const std::string& Low, const std::string& High,
+                          std::unordered_map<std::string, long long>* Lookup) {
+    int BiggerThanLow;
+    std::string::size_type RightSize;
+    if (Str[CurIdx] < '0' || Str[CurIdx] > '9' ||
+        cmp(&Str, &High, CurIdx + 1) == 1 ||
+        (BiggerThanLow = cmp(&Str, &Low, CurIdx + 1)) == -1) {
+      return 0;
+    } else if ((RightSize = Str.size() - CurIdx) == 1) {
+      return 1;
+    }
+    std::string Key = Str.substr(CurIdx, RightSize);
+    Key.append("?");
+    if (RightSize == High.size()) {
+      Key.append(High.substr(High.size() - RightSize, RightSize));
+    } else {
+      Key.append(std::string(RightSize, '9'));
+    }
+    auto It = Lookup->find(Key);
+    if (It != Lookup->end() && cmp(&Str, &High, High.size() - RightSize) != 0) {
+      return (*It).second % MODULO;
+    }
+    std::string Lower = Str, Higher = Str;
+    Lower[CurIdx + 1] = Str[CurIdx] - 1;
+    Higher[CurIdx + 1] = Str[CurIdx] + 1;
+    long long Res =
+        countSubtree(Lower, CurIdx + 1, Low, High, Lookup) % MODULO +
+        countSubtree(Higher, CurIdx + 1, Low, High, Lookup) % MODULO;
+    if (BiggerThanLow != 0) {
+      (*Lookup)[Key] = Res;
+    }
+    return Res % MODULO;
+  }
+
+  static int cmp(const std::string* Str1, const std::string* Str2, std::string::size_type Len) {
+    for (std::string::size_type I = 0; I < Len; ++I) {
+      if ((*Str1)[I] < (*Str2)[I]) {
+        return -1;
+      } else if ((*Str1)[I] > (*Str2)[I]) {
+        return 1;
+      }
+    }
+    return 0;
   }
 };
