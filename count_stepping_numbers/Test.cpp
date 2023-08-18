@@ -87,14 +87,27 @@ static void testCountSteppingNumbers() {
   assert(Solution::countSteppingNumbers("1", "10000000") == 881);
   assert(Solution::countSteppingNumbers("96", "322") == 9);
   assert(Solution::countSteppingNumbers("129", "439") == 10);
-  auto Begin = std::chrono::system_clock::now();
   assert(Solution::countSteppingNumbers(
              "1",
              "999999999999999999999999999999999999999999999999999999999999999"
              "9999999999999999999999999999999999999") == 125046265);
-  auto End = std::chrono::system_clock::now();
-  std::chrono::duration<double, std::milli> Diff = End - Begin;
-  std::cout << "Duration: " << Diff.count() << "\n";
+}
+
+static void profCountSteppingNumbers() {
+  int RunCnt = 100;
+  double Dur = 0;
+  for (int I = 0; I < RunCnt; ++I) {
+    auto Begin = std::chrono::system_clock::now();
+    assert(Solution::countSteppingNumbers(
+               "1",
+               "999999999999999999999999999999999999999999999999999999999999999"
+               "9999999999999999999999999999999999999") == 125046265);
+    auto End = std::chrono::system_clock::now();
+    std::chrono::duration<double, std::milli> Diff = End - Begin;
+    Dur += Diff.count();
+  }
+  double AvgDur = Dur / RunCnt;
+  std::printf("profCountSteppingNumbers: duration: %f\n", AvgDur);
 }
 
 int main() {
@@ -102,5 +115,6 @@ int main() {
   // testCountSubtree();
   // testCountSameLen();
   testCountSteppingNumbers();
+  profCountSteppingNumbers();
   return 0;
 }
