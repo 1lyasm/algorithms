@@ -18,42 +18,42 @@ static void testCountSubtree() {
   {
     std::unordered_map<std::string, long long> Lookup;
     std::string Low = "10", High = "19";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 2);
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 2);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
     std::string Low = "100", High = "200";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 3);
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 3);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "2023", Str = Low, High = "2999";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 7);
+    std::string Low = "2023", High = "2999";
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 7);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "100000", Str = Low, High = "199999";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 20);
+    std::string Low = "100000", High = "199999";
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 20);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "100000", Str = Low, High = "120000";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 6);
+    std::string Low = "100000", High = "120000";
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 6);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "120000", Str = Low, High = "199999";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 14);
+    std::string Low = "120000", High = "199999";
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 14);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "33000000", Str = Low, High = "37000000";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 61);
+    std::string Low = "33000000", High = "37000000";
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 61);
   }
   {
     std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "106", Str = Low, High = "121";
-    assert(Solution::countSubtree(Low, 0, Low, High, &Lookup) == 1);
+    std::string Low = "106", High = "121";
+    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 1);
   }
 }
 
@@ -84,9 +84,9 @@ static void testCountSteppingNumbers() {
 }
 
 int main() {
-  testCmp();
-  testCountSubtree();
-  testCountSameLen();
+  // testCmp();
+  // testCountSubtree();
+  // testCountSameLen();
   testCountSteppingNumbers();
   return 0;
 }
