@@ -5,65 +5,79 @@
 
 static void testCmp() {
   std::string Str1 = "123", Str2 = "124";
-  assert(Solution::cmp(&Str1, &Str2, 3) == -1);
+  assert(Solution::cmp(Str1.c_str(), Str2.c_str(), 3) == -1);
   Str1 = "124";
   Str2 = "123";
-  assert(Solution::cmp(&Str1, &Str2, 3) == 1);
+  assert(Solution::cmp(Str1.c_str(), Str2.c_str(), 3) == 1);
   Str1 = "123";
   Str2 = "123";
-  assert(Solution::cmp(&Str1, &Str2, 3) == 0);
+  assert(Solution::cmp(Str1.c_str(), Str2.c_str(), 3) == 0);
 }
 
-static void testCountSubtree() {
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "10", High = "19";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 2);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "100", High = "200";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 3);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "2023", High = "2999";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 7);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "100000", High = "199999";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 20);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "100000", High = "120000";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 6);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "120000", High = "199999";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 14);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "33000000", High = "37000000";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 61);
-  }
-  {
-    std::unordered_map<std::string, long long> Lookup;
-    std::string Low = "106", High = "121";
-    assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 1);
-  }
-}
+// static void testCountSubtree() {
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "10", High = "19";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 2);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "100", High = "200";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 3);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "2023", High = "2999";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 7);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "100000", High = "199999";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 20);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "100000", High = "120000";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 6);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "120000", High = "199999";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 14);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "33000000", High = "37000000";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 61);
+//   }
+//   {
+//     std::unordered_map<std::string, long long> Lookup;
+//     std::string Low = "106", High = "121";
+//     assert(Solution::countSubtree(&Low, 0, Low, High, &Lookup) == 1);
+//   }
+// }
 
 static void testCountSameLen() {
   std::unordered_map<std::string, long long> Lookup;
-  assert(Solution::countSameLen("33000000", "37000000", &Lookup) == 61);
-  assert(Solution::countSameLen("3000000", "7000000", &Lookup) == 234);
-  assert(Solution::countSameLen("1000000", "8999999", &Lookup) == 404);
-  assert(Solution::countSameLen("1", "9", &Lookup) == 9);
-  assert(Solution::countSameLen("100", "999", &Lookup) == 32);
+  std::string Low = "33000000", High = "37000000";
+  assert(Solution::countSameLen(Low.c_str(), Low.size(), High.c_str(),
+                                High.size(), &Lookup) == 61);
+  Low = "3000000";
+  High = "7000000";
+  assert(Solution::countSameLen(Low.c_str(), Low.size(), High.c_str(),
+                                High.size(), &Lookup) == 234);
+  Low = "1000000";
+  High = "8999999";
+  assert(Solution::countSameLen(Low.c_str(), Low.size(), High.c_str(),
+                                High.size(), &Lookup) == 404);
+  Low = "1";
+  High = "9";
+  assert(Solution::countSameLen(Low.c_str(), Low.size(), High.c_str(),
+                                High.size(), &Lookup) == 9);
+  Low = "100";
+  High = "999";
+  assert(Solution::countSameLen(Low.c_str(), Low.size(), High.c_str(),
+                                High.size(), &Lookup) == 32);
 }
 
 static void testCountSteppingNumbers() {
