@@ -6,7 +6,10 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <map>
 #include <vector>
+
+// #define DEBUG
 
 #define MODULO (1000000000 + 7)
 
@@ -65,7 +68,9 @@ class Solution {
     }
     std::free(Low);
     std::free(High);
-    // std::printf("countSteppingNumbers: returning: %d\n", Res);
+#ifdef DEBUG
+    std::printf("countSteppingNumbers: returning: %d\n", Res);
+#endif
     return Res;
   }
 
@@ -96,10 +101,14 @@ class Solution {
         Lower[1] = I - 1;
         Higher[0] = I;
         Higher[1] = I + 1;
-        // std::printf("countSameLen: branching left\n");
+#ifdef DEBUG
+        std::printf("countSameLen: branching left\n");
+#endif
         Cnt += countSubtree(Lower, LowSize, 1, Low, LowSize, High, HighSize,
                             Lookup);
-        // std::printf("countSameLen: branching right\n");
+#ifdef DEBUG
+        std::printf("countSameLen: branching right\n");
+#endif
         Cnt += countSubtree(Higher, LowSize, 1, Low, LowSize, High, HighSize,
                             Lookup);
       }
@@ -107,7 +116,9 @@ class Solution {
       std::free(Higher);
       Res = Cnt % MODULO;
     }
-    // std::printf("countSameLen: returning: %d\n", Res);
+#ifdef DEBUG
+    std::printf("countSameLen: returning: %d\n", Res);
+#endif
     return Res;
   }
 
@@ -121,24 +132,35 @@ class Solution {
     if (Str[CurIdx] < '0' || Str[CurIdx] > '9' ||
         cmp(Str, High, CurIdx + 1) == 1 ||
         (BiggerThanLow = cmp(Str, Low, CurIdx + 1)) == -1) {
-      // std::printf("countSubtree: reached leaf node\n");
+#ifdef DEBUG
+      std::printf("countSubtree: reached leaf node\n");
+#endif
       Res = 0;
     } else if ((RightSize = StrSize - CurIdx) == 1) {
-      // std::printf("countSubtree: reached leaf node\n");
+#ifdef DEBUG
+      std::printf("countSubtree: reached leaf node\n");
+#endif
       Res = 1;
     } else {
-      std::string Key;
-      Key.reserve(2 * RightSize + 1);
-      for (std::string::size_type I = CurIdx; I < CurIdx + RightSize; ++I) {
-        Key.push_back(Str[I]);
+      unsigned long KeySize = 2 * RightSize + 1;
+      char* Key = static_cast<char*>(std::malloc((KeySize + 1) * sizeof(char)));
+      if (Key == nullptr) {
+        fail("countSubtree: std::malloc");
       }
-      Key.push_back('?');
+      Key[KeySize] = 0;
+      for (unsigned long I = 0; I < RightSize; ++I) {
+        Key[I] = Str[CurIdx + I];
+      }
+      Key[RightSize] = '?';
       if (RightSize == HighSize) {
-        Key.append(&High[HighSize - RightSize]);
+        for (unsigned long I = 0; I < RightSize; ++I) {
+          Key[RightSize + I] = High[CurIdx + I];
+        }
       } else {
-        Key.append(std::string(RightSize, '9'));
+        std::memset(&Key[RightSize + 1], '9', RightSize);
       }
-      auto It = Lookup->find(Key);
+      std::string KeyStr(Key);
+      auto It = Lookup->find(KeyStr);
       if (It != Lookup->end() && cmp(Str, High, HighSize - RightSize) != 0) {
         Res = (*It).second % MODULO;
       } else {
@@ -152,12 +174,15 @@ class Solution {
                MODULO;
         --Str[CurIdx + 1];
         if (BiggerThanLow != 0) {
-          (*Lookup)[Key] = Cnt;
+          (*Lookup)[KeyStr] = Cnt;
         }
         Res = Cnt % MODULO;
       }
+      std::free(Key);
     }
-    // std::printf("countSubtree: returning: %d\n", Res);
+#ifdef DEBUG
+    std::printf("countSubtree: returning: %d\n", Res);
+#endif
     return Res;
   }
 
