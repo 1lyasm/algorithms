@@ -22,14 +22,9 @@ class Solution {
   }
 #endif
 
-  static int makeKey(int Start, int GapCnt) {
-    return 100 + 900 * (GapCnt >= 10) + Start * (10 + 90 * (GapCnt >= 10)) +
-           GapCnt;
-  }
-
-  static void fillLookupFast(std::unordered_map<int, long long>* Lookup,
-                             int MaxGapCnt) {
-    for (int I = 0; I <= 9; ++I) {
+  static void fillLookupFast(std::vector<std::vector<long long>>* Lookup,
+                             unsigned long MaxGapCnt) {
+    for (unsigned long I = 0; I <= 9; ++I) {
       long long Val = 0;
       if (I > 0) {
         ++Val;
@@ -37,22 +32,20 @@ class Solution {
       if (I < 9) {
         ++Val;
       }
-      (*Lookup)[makeKey(I, 1)] = Val;
+      (*Lookup)[I][1] = Val;
     }
-    for (int I = 2; I <= MaxGapCnt; ++I) {
-      for (int J = 0; J <= 9; ++J) {
+    for (unsigned long I = 2; I <= MaxGapCnt; ++I) {
+      for (unsigned long J = 0; J <= 9; ++J) {
         long long Val = 0;
         if (J >= 1) {
-          auto It = Lookup->find(makeKey(J - 1, I - 1));
-          Val += (*It).second;
+          Val += (*Lookup)[J - 1][I - 1];
           Val %= MODULO;
         }
         if (J <= 8) {
-          auto It = Lookup->find(makeKey(J + 1, I - 1));
-          Val += (*It).second;
+          Val += (*Lookup)[J + 1][I - 1];
           Val %= MODULO;
         }
-        (*Lookup)[makeKey(J, I)] = Val;
+        (*Lookup)[J][I] = Val;
       }
     }
 #ifdef DEBUG
@@ -61,25 +54,26 @@ class Solution {
 #endif
   }
 
-  static int cmp(const std::string* Str1, const std::string* Str2,
+  static int cmp(const char* Str1, const char* Str2,
                  std::string::size_type Len) {
     for (std::string::size_type I = 0; I < Len; ++I) {
-      if ((*Str1)[I] < (*Str2)[I]) {
+      if (Str1[I] < Str2[I]) {
         return -1;
-      } else if ((*Str1)[I] > (*Str2)[I]) {
+      } else if (Str1[I] > Str2[I]) {
         return 1;
       }
     }
     return 0;
   }
+
   static int countSubtree(std::string& Str, std::string::size_type CurIdx,
                           const std::string& Low, const std::string& High,
                           std::unordered_map<std::string, long long>* Lookup) {
     int BiggerThanLow;
     std::string::size_type RightSize;
     if (Str[CurIdx] < '0' || Str[CurIdx] > '9' ||
-        cmp(&Str, &High, CurIdx + 1) == 1 ||
-        (BiggerThanLow = cmp(&Str, &Low, CurIdx + 1)) == -1) {
+        cmp(Str.c_str(), High.c_str(), CurIdx + 1) == 1 ||
+        (BiggerThanLow = cmp(Str.c_str(), Low.c_str(), CurIdx + 1)) == -1) {
       return 0;
     } else if ((RightSize = Str.size() - CurIdx) == 1) {
       return 1;
@@ -92,8 +86,9 @@ class Solution {
       Key.append(std::string(RightSize, '9'));
     }
     auto It = Lookup->find(Key);
-    if (It != Lookup->end() && cmp(&Str, &High, High.size() - RightSize) != 0) {
-      return (*It).second % MODULO;
+    if (It != Lookup->end() &&
+        cmp(Str.c_str(), High.c_str(), High.size() - RightSize) != 0) {
+      return It->second % MODULO;
     }
     std::string Lower = Str, Higher = Str;
     Lower[CurIdx + 1] = Str[CurIdx] - 1;
@@ -129,12 +124,11 @@ class Solution {
     return Cnt % MODULO;
   }
 
-  static int countSameLenFast(int Len,
-                              std::unordered_map<int, long long>* Lookup) {
+  static int countSameLenFast(unsigned long Len,
+                              std::vector<std::vector<long long>>* Lookup) {
     long long Cnt = 0;
-    for (int I = 1; I <= 9; ++I) {
-      auto It = Lookup->find(makeKey(I, Len - 1));
-      Cnt += It->second;
+    for (unsigned long I = 1; I <= 9; ++I) {
+      Cnt += (*Lookup)[I][Len - 1];
       Cnt %= MODULO;
     }
     int Res = static_cast<int>(Cnt);
@@ -146,7 +140,8 @@ class Solution {
 
   static int countSteppingNumbers(std::string low, std::string high) {
     std::unordered_map<std::string, long long> Lookup;
-    std::unordered_map<int, long long> LookupFast;
+    std::vector<std::vector<long long>> LookupFast(10,
+                                                   std::vector<long long>(100));
     if (low.size() == high.size()) {
       return countSameLen(low, high, &Lookup) % MODULO;
     }
@@ -154,9 +149,9 @@ class Solution {
     Cnt += countSameLen(low, std::string(low.size(), '9'), &Lookup);
     for (std::string::size_type I = low.size() + 1; I < high.size(); ++I) {
       if (I == low.size() + 1) {
-        fillLookupFast(&LookupFast, static_cast<int>(high.size()));
+        fillLookupFast(&LookupFast, high.size() - 1);
       }
-      Cnt += countSameLenFast(static_cast<int>(I), &LookupFast);
+      Cnt += countSameLenFast(I, &LookupFast);
       Cnt %= MODULO;
     }
     std::string LBound = "1";

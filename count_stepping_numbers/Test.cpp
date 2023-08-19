@@ -4,12 +4,12 @@
 #include "Main.cpp"
 
 static void testCountSteppingNumbers() {
-  // assert(Solution::countSteppingNumbers("100", "999") == 32);
-  // assert(Solution::countSteppingNumbers("1", "11") == 10);
-  // assert(Solution::countSteppingNumbers("90", "101") == 2);
-  // assert(Solution::countSteppingNumbers("1", "10000000") == 881);
-  // assert(Solution::countSteppingNumbers("96", "322") == 9);
-  // assert(Solution::countSteppingNumbers("129", "439") == 10);
+  assert(Solution::countSteppingNumbers("100", "999") == 32);
+  assert(Solution::countSteppingNumbers("1", "11") == 10);
+  assert(Solution::countSteppingNumbers("90", "101") == 2);
+  assert(Solution::countSteppingNumbers("1", "10000000") == 881);
+  assert(Solution::countSteppingNumbers("96", "322") == 9);
+  assert(Solution::countSteppingNumbers("129", "439") == 10);
   assert(Solution::countSteppingNumbers(
              "1",
              "999999999999999999999999999999999999999999999999999999999999999"
