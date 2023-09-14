@@ -37,7 +37,7 @@ func contains(bytes []byte, target byte) bool {
 	return found
 }
 
-func findUniqCount(str string) int {
+func countUnique(str string) int {
 	seen, count := make([]byte, 1), 0
 	for i := 0; i < len(str); i += 1 {
 		char := str[i]
@@ -68,9 +68,9 @@ func printCipher(str string, startIndex int) int {
 	day, _ := strconv.Atoi(dayStr)
 	month, _ := strconv.Atoi(monthStr)
 	year, _ := strconv.Atoi(yearStr)
-	log.Printf("printCipher: name: %s, middle: %s, lastname: %s, day: %d, month: %d, year: %d", 
+	log.Printf("printCipher: name: %s, middle: %s, lastname: %s, day: %d, month: %d, year: %d",
 		name, middle, lastname, day, month, year)
-	uniqCount := findUniqCount(name + middle + lastname)
+	uniqCount := countUnique(name + middle + lastname)
 	log.Printf("printCipher: uniqCount: %d", uniqCount)
 	digitSum := sumDigits(dayStr) + sumDigits(monthStr)
 	log.Printf("printCipher: digitSum: %d", digitSum)
