@@ -60,10 +60,12 @@ func printResults(results []BenchRes) {
 }
 
 func main() {
-	runCount := 2000
+	runCount := 20000
 	results := []BenchRes{
 		{name: "go", dur: bench(runCount, "../go", "go", "build", "-o", "main")},
 		{name: "rust", dur: bench(runCount, "../rust", "rustc", "src/main.rs", "-o", "main")},
+		{name: "zig", dur: bench(runCount, "../zig", "zig", "build-exe",
+            "-O", "ReleaseFast", "-femit-bin=main", "src/main.zig")},
 		{name: "c", dur: bench(runCount, "../c", "make")}}
 	printResults(results)
 }

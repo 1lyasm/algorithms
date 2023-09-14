@@ -70,7 +70,7 @@ int find_max_calories(char *str) {
     return max_sum;
 }
 
-int main() {
+int main(void) {
     char *str = read_to_string("src/input.txt");
     printf("%d\n", find_max_calories(str));
     free(str);
