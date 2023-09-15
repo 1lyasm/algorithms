@@ -38,6 +38,14 @@ fn maxCalories(str: []const u8) i32 {
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
-    const str = @embedFile("input.txt");
+    var file = try std.fs.cwd().openFile("src/input.txt", std.fs.File.OpenFlags{ .mode = std.fs.File.OpenMode.read_only });
+    defer file.close();
+
+    const maxBytes = 1e6;
+    const allocator = std.heap.page_allocator;
+
+    var str = try file.readToEndAlloc(allocator, maxBytes);
+    defer allocator.free(str);
+
     try stdout.print("{d}\n", .{maxCalories(str)});
 }
