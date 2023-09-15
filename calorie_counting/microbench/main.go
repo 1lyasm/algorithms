@@ -16,18 +16,18 @@ type BenchRes struct {
 func bench(runCount int, dir string, cmd string, args ...string) time.Duration {
 	err := os.Chdir(dir)
 	if err != nil {
-		log.Fatalf("run: os.Chdir failed for %s: %v", cmd, err)
+		log.Fatalf("bench: os.Chdir failed for %s: %v", cmd, err)
 	}
 	_, err = exec.Command(cmd, args...).Output()
 	if err != nil {
-		log.Fatalf("run: %s failed: %v", cmd, err)
+		log.Fatalf("bench: %s failed: %v", cmd, err)
 	}
 	var dur time.Duration = 0
 	for i := 0; i < runCount; i += 1 {
 		start := time.Now()
 		_, err = exec.Command("./main").Output()
 		if err != nil {
-			log.Fatalf("run: binary failed: %v", err)
+			log.Fatalf("bench: binary failed: %v", err)
 		}
 		dur += time.Since(start)
 	}
@@ -60,10 +60,11 @@ func printResults(results []BenchRes) {
 }
 
 func main() {
-	runCount := 20000
+	runCount := 10000
 	results := []BenchRes{
-		{name: "go", dur: bench(runCount, "../go", "go", "build", "-o", "main")},
-		{name: "rust", dur: bench(runCount, "../rust", "rustc", "src/main.rs", "-o", "main")},
+		{name: "go", dur: bench(runCount, "../go", "go", "build", "-ldflags", "-s", "-o", "main")},
+		{name: "rust", dur: bench(runCount, "../rust", "cargo", "build", "-r", "-Z", "unstable-options",
+            "--out-dir", ".", "--bin", "main")},
 		{name: "zig", dur: bench(runCount, "../zig", "zig", "build-exe",
            "-O", "ReleaseFast", "-femit-bin=main", "src/main.zig")},
 		{name: "c", dur: bench(runCount, "../c", "make")}}
