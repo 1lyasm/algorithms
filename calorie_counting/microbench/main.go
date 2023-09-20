@@ -64,9 +64,9 @@ func main() {
 	results := []BenchRes{
 		{name: "go", dur: bench(runCount, "../go", "go", "build", "-ldflags", "-s", "-o", "main")},
 		{name: "rust", dur: bench(runCount, "../rust", "cargo", "build", "-r", "-Z", "unstable-options",
-            "--out-dir", ".", "--bin", "main")},
-		{name: "zig", dur: bench(runCount, "../zig", "zig", "build-exe",
-           "-O", "ReleaseFast", "-femit-bin=main", "src/main.zig")},
+			"--out-dir", ".", "--bin", "main")},
+		// {name: "zig", dur: bench(runCount, "../zig", "zig", "build-exe",
+		//    "-O", "ReleaseFast", "-femit-bin=main", "src/main.zig")},
 		{name: "c", dur: bench(runCount, "../c", "make")}}
 	printResults(results)
 }
