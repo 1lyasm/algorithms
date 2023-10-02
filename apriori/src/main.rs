@@ -20,6 +20,10 @@ struct Rules {
     rule_list: Vec<Rule>
 }
 
+struct Candidates {
+    candidate_list: Vec<Itemsets>
+}
+
 impl Itemset {
 }
 
@@ -42,6 +46,12 @@ impl Itemsets {
         }
         return (found, found_itemset);
     }
+
+
+    fn delete_infrequent(&mut self, min_support: f64, txn_count: u64) {
+        for itemset in &self.itemset_list {
+        }
+    }
 }
 
 impl Transactions {
@@ -54,24 +64,11 @@ impl Transactions {
         }
     }
 
-    fn init_candidates(&self) -> Itemsets {
-        let mut candidates = Itemsets{itemset_list: Vec::new()};
-        for txn in &self.txn_list {
-            for item in txn {
-                let (contains, index) = candidates.find_item_first(item.to_string());
-                if contains {
-                    candidates.itemset_list.get_mut(index).unwrap().support += 1;
-                } else {
-                    candidates.itemset_list.push(
-                        Itemset{item_list: vec![item.to_string()], support: 1});
-                }
-            }
-        }
-        return candidates;
-    }
-
-    fn apriori(&self) -> Rules {
-        let candidates = self.init_candidates();
+    fn apriori(&self, min_support: f64, txn_count: usize) -> Rules {
+        let mut candidates = Candidates::init(&self);
+        let frequents = candidates.candidate_list.get_mut(0).unwrap();
+        frequents
+            .delete_infrequent(min_support, txn_count);
         return Rules{rule_list: Vec::new()};
     }
 }
@@ -98,9 +95,32 @@ impl Rules {
     }
 }
 
+impl Candidates {
+    fn init(transactions: &Transactions) -> Candidates {
+        let mut candidates = Candidates{candidate_list:
+            vec![Itemsets{itemset_list: Vec::new()}]};
+        let initial_candidates: &mut Itemsets =
+            candidates.candidate_list.get_mut(0).unwrap();
+        for txn in &transactions.txn_list {
+            for item in txn {
+                let (contains, index) = initial_candidates.find_item_first(item.to_string());
+                if contains {
+                    initial_candidates.itemset_list.get_mut(index).unwrap().support += 1;
+                } else {
+                    initial_candidates.itemset_list.push(
+                        Itemset{item_list: vec![item.to_string()], support: 1});
+                }
+            }
+        }
+        return candidates;
+    }
+}
+
 fn main() {
-    let txn_list = Transactions{txn_list: vec![vec!["a", "b"], vec!["c", "d"]]};
-    txn_list.print();
-    txn_list.apriori().print();
+    let transactions = Transactions{txn_list: vec![vec!["a", "b"],
+        vec!["c", "d"]]};
+    transactions.print();
+    let min_support = 0.5;
+    transactions.apriori(min_support, transactions.txn_list.len()).print();
 }
 
