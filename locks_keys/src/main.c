@@ -12,44 +12,42 @@ void printArr(char *msg, int *arr, int len) {
   printf("\n");
 }
 
+void swap(int *a, int *b) {
+  int tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+
 int partition(int *arr, int low, int high, int pivot) {
   int i = low;
   int j;
-  int temp1, temp2;
-
-  for (j = low; j < high; j++) {
-    if (arr[j] < pivot) {
-      temp1 = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp1;
-      i++;
-    } else if (arr[j] == pivot) {
-      temp1 = arr[j];
-      arr[j] = arr[high];
-      arr[high] = temp1;
-      j--;
+  for (j = low; j < high; ++j) {
+    if (arr[j] == pivot) {
+      swap(&arr[j], &arr[high]);
+      --j;
+    } else if (arr[j] < pivot) {
+      swap(&arr[i], &arr[j]);
+      ++i;
     }
   }
-  temp2 = arr[i];
-  arr[i] = arr[high];
-  arr[high] = temp2;
-
+  swap(&arr[i], &arr[high]);
   return i;
 }
 
 void match(int *locks, int *keys, int low, int high) {
-  if (low < high) {
-    int key_index = low + rand() % (high - low);
-    int pivot = partition(locks, low, high, keys[key_index]);
-
-    partition(keys, low, high, locks[pivot]);
-
-    match(locks, keys, low, pivot - 1);
-    match(locks, keys, pivot + 1, high);
+  int randKeyPos;
+  int pivotPos;
+  if (low >= high) {
+    return;
   }
+  randKeyPos = low + rand() % (high - low);
+  pivotPos = partition(locks, low, high, keys[randKeyPos]);
+  partition(keys, low, high, locks[pivotPos]);
+  match(locks, keys, low, pivotPos - 1);
+  match(locks, keys, pivotPos + 1, high);
 }
 
-void assert_arr_eq(int *arr1, int *arr2, int len) {
+void assertArrEq(int *arr1, int *arr2, int len) {
   int i;
   for (i = 0; i < len; ++i) {
     assert(arr1[i] == arr2[i]);
@@ -68,8 +66,8 @@ int main() {
     match(locks, keys, 0, n - 1);
     printArr("keys after match", keys, n);
     printArr("locks after match", locks, n);
-    assert_arr_eq(locks, sorted, n);
-    assert_arr_eq(keys, sorted, n);
+    assertArrEq(locks, sorted, n);
+    assertArrEq(keys, sorted, n);
     printf("\n");
   }
   {
@@ -82,8 +80,8 @@ int main() {
     match(locks, keys, 0, n - 1);
     printArr("keys after match", keys, n);
     printArr("locks after match", locks, n);
-    assert_arr_eq(locks, sorted, n);
-    assert_arr_eq(keys, sorted, n);
+    assertArrEq(locks, sorted, n);
+    assertArrEq(keys, sorted, n);
     printf("\n");
   }
   return 0;
