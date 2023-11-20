@@ -54,13 +54,10 @@ int searchHash(int *hash, int m, int val) {
         hash_idx = (hash_idx + 1) % m;
         // printf("hash_idx: %d\n", hash_idx);
     }
-    if (j == m) {
-        return 0;
+    if (hash[hash_idx] == val) {
+        return 1;
     }
-    if (hash[hash_idx] == -1) {
-        return 0;
-    }
-    return 1;
+    return 0;
 }
 
 int main() {
