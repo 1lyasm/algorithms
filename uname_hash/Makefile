@@ -1,5 +1,6 @@
 all:
-	clang -g -fsanitize=address -ansi src/main.c -o main
+	clang -g -fsanitize=address -Wall -Weor \
+		-Wpedantic -ansi src/main.c -o main
 normal:
 	./main NORMAL
 debug:
