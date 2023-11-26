@@ -94,9 +94,10 @@ int checkPrime(int num) {
 
 int compM(int n, double lf) {
     int quotient = (int)ceil(n / lf);
-    printf("compM: quotient: %d\n", quotient);
-    int m = quotient - 1;
+    int m;
     int isPrime = 0;
+    printf("compM: quotient: %d\n", quotient);
+    m = quotient - 1;
     while (isPrime == 0) {
         ++m;
         isPrime = checkPrime(m);
@@ -117,8 +118,18 @@ void testCheckPrime() {
     assert(checkPrime(189) == 0);
 }
 
-void execAdd() {
+int strToNum(char *str, int unameLen, int m) {
+    int num = 0;
+    int i;
+    for (i = 0; i < unameLen; ++i) {
+        num += pow(m, unameLen - i - 1) * (str[i] - 'A' + 1);
+    }
+    return num;
+}
+
+void execAdd(int *hash, int n, int m, int lf) {
     char *uname = malloc(MAX_UNAME_LEN * sizeof(char));
+    int unameLen;
     if (uname == NULL) {
         printf("execAdd: malloc failed\n");
         exit(EXIT_FAILURE);
@@ -126,13 +137,24 @@ void execAdd() {
     printf("execAdd: called\n");
     printf("Yeni kullanıcı adını giriniz: ");
     scanf(" %s", uname);
+    unameLen = strlen(uname);
     printf("execAdd: uname: %s\n", uname);
+    int asNum = strToNum(uname, unameLen, m);
+    printf("execAdd: asNum: %d\n", asNum);
     free(uname);
 }
 
-void execDelete() { printf("execDelete: called\n"); }
+void execDelete(int *hash, int n, int m, int lf) {
+    printf("execDelete: called\n");
+}
 
-void execSearch() { printf("execSearch: called\n"); }
+void execSearch(int *hash, int n, int m, int lf) {
+    printf("execSearch: called\n");
+}
+
+void testStrToNum() {
+    // TODO test strToNum
+}
 
 int main(int argc, char **argv) {
     Mode mode = parseArgs(argc, argv);
@@ -142,6 +164,7 @@ int main(int argc, char **argv) {
     char resp;
     char **hash;
     testCheckPrime();
+    testStrToNum();
     printMode(mode);
     n = readN();
     printf("main: n: %d\n", n);
@@ -162,11 +185,11 @@ int main(int argc, char **argv) {
         printf("main: resp: %c\n", resp);
         opId = resp - '0';
         if (opId == 1) {
-            execAdd();
+            execAdd(hash, n, m, lf);
         } else if (opId == 2) {
-            execDelete();
+            execDelete(hash, n, m, lf);
         } else if (opId == 3) {
-            execSearch();
+            execSearch(hash, n, m, lf);
         } else {
             printf("Geçersiz operasyon, yeniden deneyin\n");
         }
