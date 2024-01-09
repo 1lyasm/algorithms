@@ -8,6 +8,7 @@ int main() {
     char *buf;
     char *a;
     char *b;
+    char *lcs;
     int **memo;
     int i;
     int j;
@@ -61,9 +62,13 @@ int main() {
     lcsLen = memo[0][0];
     printf("LCS length: %d\n", lcsLen);
 
+    lcs = malloc((lcsLen + 1) * sizeof(char));
+    lcs[lcsLen] = 0;
+
     free(buf);
     free(a);
     free(b);
+    free(lcs);
 
     for (i = 0; i < bLen + 1; ++i) {
         free(memo[i]);
