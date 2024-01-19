@@ -92,5 +92,13 @@ int main(void) {
   lookAt(123, &list);
   lookAt(123, &list);
   printList(&list);
+  printf("\n");
+  ListNode *cur = list.head;
+  while (cur != NULL) {
+      ListNode *next = cur->next;
+      free(cur);
+      cur = next;
+  }
+
   return 0;
 }
