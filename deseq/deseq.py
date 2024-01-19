@@ -6,7 +6,7 @@ class DESequence:
         self.n = 0
         self.__lft = []
         self.__rgt = []
-    
+
     def build(self, lst, n):
         if len(lst) == 0:
             self.__lft.reverse()
@@ -14,15 +14,15 @@ class DESequence:
         self.n += 1
         if self.n <= n // 2:
             self.__lft.append(lst[0])
-        else:   
+        else:
             self.__rgt.append(lst[0])
         return self.build(lst[1:], n)
-    
+
     def get_at(self, idx):
         return self.__lft[len(self.__lft) - 1 - idx] if (
             idx < len(self.__lft)) else self.__rgt[
             idx - len(self.__lft)]
-    
+
     def insertl(self, item):
         self.n += 1
         self.__rgt.append(item)
@@ -30,7 +30,7 @@ class DESequence:
     def insertf(self, item):
         self.n += 1
         self.__lft.append(item)
-    
+
     def deletel(self):
         if len(self.__rgt) <= 0:
             self.rebuild([], self.n)
@@ -43,7 +43,7 @@ class DESequence:
             self.rebuild([], self.n)
         self.n -= 1
         return self.__lft.pop()
-    
+
     def rebuild(self, lst, n):
         if self.n <= 0:
             self.build(lst, len(lst))
@@ -60,13 +60,13 @@ class DESequence:
 def print_all(d):
     for i in range(d.n):
         print(d.get_at(i), end=" ")
-    
+
 def main():
     lst = [1, 2, 3, 4, 5, 6]
     d = DESequence().build(lst, len(lst))
     print_all(d)
     for i in range(13, 20):
-        d.insertl(i)  
+        d.insertl(i)
     print("\n\n")
     print_all(d)
 
@@ -86,6 +86,8 @@ def main():
         d.deletef()
     print("\n\n")
     print_all(d)
-    
+
+    print("\n")
+
 if __name__ == "__main__":
     main()
